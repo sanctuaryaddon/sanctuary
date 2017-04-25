@@ -64,7 +64,7 @@ INTRO_VID_TEMP = xbmc.translatePath('special://home/addons/plugin.video.sanctuar
 ADDONS      =  xbmc.translatePath(os.path.join('special://home','addons',''))
 addon_id='plugin.video.sanctuary'
 current_folder = ADDONS+'/'+addon_id+'/'
-full_file = current_folder.replace('\\','/') + '/final.txt'
+full_file = current_folder.replace('\\','/') + '/welcome.txt'
 
 def TextBoxes(heading,announce):
   class TextBox():
@@ -87,7 +87,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Final Version','The time has come to call it a day. I\'ve been studying lots of other stuff outside of Kodi and unfortunately am at a point where i feel i have too many commitments so Kodi stuff being a hobby will have to be the one getting the chop. I\'ll not delete any addons as if they still work you may aswell enjoy them. All the code is open for anyone to use or addons to fork just do them justice and a little credit is never a bad thing. Don\'t forget to visit kodification.co.uk as the site will hopefully be getting a nice new look in the coming weeks. \n\nThe addon\'s will work as long as they work i cannot promise any time scale just enjoy them while they are there, but there will be no future updates to any addons. Its been a long and enjoyable learning curve and hope some have enjoyed my addons. All the best to everyone thats helped me along the way.\n\nOrigin')
+    TextBoxes('Team Sanctuary','Hey guy\'s and welcome back. so everyone here at Sanctuary was saddened that Origin no longer wanted to carry on in the kodi community, but all of us here thought we would like to carry on in his honor and that it would be a great shame to lay his masterpice to rest o with his blessing we are going to soldier on as best as we can.\n\nTeam Sanctuary')
 
 
 
