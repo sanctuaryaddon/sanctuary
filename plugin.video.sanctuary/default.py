@@ -38,8 +38,8 @@ FANART = ADDON_PATH + 'fanart.jpg'
 Adult_Pass = ADDON.getSetting('Adult')
 Adult_Default = ADDON.getSetting('Porn_Pass')
 base_icons = 'http://herovision.x10host.com/freeview/'
-ORIGIN_ICON = base_icons + 'origin.png'
-ORIGIN_FANART = base_icons + 'origin.jpg'
+ORIGIN_ICON = base_icons + 'icon.png'
+ORIGIN_FANART = base_icons + 'fanart.jpg'
 PANDORA_ICON = 'https://s32.postimg.org/ov9s6ipf9/icon.png'
 RAIDER_ICON = base_icons + 'pyramid.png'
 FREEVIEW_ICON = base_icons + 'freeview.png'
@@ -87,7 +87,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Team Sanctuary','Hey guy\'s and welcome back. so everyone here at Sanctuary was saddened that Origin no longer wanted to carry on in the kodi community, but all of us here thought we would like to carry on in his honor and that it would be a great shame to lay his masterpice to rest o with his blessing we are going to soldier on as best as we can.\n\nTeam Sanctuary')
+    TextBoxes('Team Sanctuary','UPDATE V 0.6.8\n Remove and replace dead links\n temp remove broken addons from menus until they back online .\n\nTeam Sanctuary')
 
 
 
@@ -145,26 +145,28 @@ def IMDB_list():
 		
 def twenty47():
 	from lib.pyramid import pyramid
-	process.Menu('Origin 24/7 Cartoons','',812,ORIGIN_ICON,FANART,'','')
-	pyramid.not_so_anon('Fido 24/7','[QT][LW][PD][QZ][WI][PD][AL][DE][SS][MW][FU][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YO][BU][PD][OI][MW][UP][YZ][LW][YO][LS][XU][WX][PD][LS][LS][XU][QZ][YZ][XX][XW]-[XB][RJ][KW][PD][QZ][QZ][MW][JJ][UP][YZ][XX][XW][XB][RJ][KW][PD][QZ][QZ][MW][JJ][UP]Hope you enjoy the view',FIDO_ICON,FANART,'','','')
+	process.Menu('Sanctuary 24/7 Cartoons','',812,ORIGIN_ICON,FANART,'','')
+	pyramid.not_so_anon('Fido 24/7','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@@KE@@AV@-@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@PC@@KE@@AV@@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('Pyramid 24/7','http://tombraiderbuilds.co.uk/addon/tvseries/247shows/247shows.txt',1101,RAIDER_ICON,'','','')
 	process.Menu('Supremacy 24/7','http://stephen-builds.uk/supremacy/24-7/24-7.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
-	process.Random_play('Raiz TV - Play 10 Random Cartoons',1154,url='http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsrandom.txt',image=RAY_ICON,isFolder=False)
+	#process.Random_play('Raiz TV - Play 10 Random Cartoons',1154,url='http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsrandom.txt',image=RAY_ICON,isFolder=False)
 	
 def docs():
-	process.Menu('Raiz Documentaries','http://raiztv.co.uk/RaysRavers/list2/raiztv/doc/doc.txt',1101,RAY_ICON,'','','')
-	process.Menu('Pyramid Documentaries','http://tombraiderbuilds.co.uk/addon/documentaries/documentaries.txt',1101,RAY_ICON,'','','')
+	process.Menu('Fido Documentaries','http://fantazyrepo.uk/addonimages/fido.addon/newmovies/documentary.xml',1101,FIDO_ICON,FANART,'','','')
+	process.Menu('Pyramid Documentaries','http://tombraiderbuilds.co.uk/addon/documentaries/documentaries.txt',1101,RAIDER_ICON,'','','')
+	#process.Menu('Raiz Documentaries','http://raiztv.co.uk/RaysRavers/list2/raiztv/doc/doc.txt',1101,RAY_ICON,'','','')
 	
 def sports():
 	process.Menu('Renegades Darts','',2150,RENEGADES_ICON,FANART,'','')
-	process.Menu('DELIVERANCE','',1139,'https://3.bp.blogspot.com/-mRS8HrApaaY/WOI17mTddmI/AAAAAAAAXBo/CaxwCX7o47QZxaV6W1Qeff39ZyQjYuI5wCLcB/s1600/Deliverance%2BKodi%2B17%2B1.png',FANART,'','')
-	process.Menu('BAMF Live Sports','http://genietvcunts.co.uk/bamffff/livesports.xml',1101,ORIGIN_ICON,FANART,'','')
-	process.Menu('Origin Football Replays','',400,ORIGIN_ICON,FANART,'','')
+	#process.Menu('DELIVERANCE','',1139,'https://3.bp.blogspot.com/-mRS8HrApaaY/WOI17mTddmI/AAAAAAAAXBo/CaxwCX7o47QZxaV6W1Qeff39ZyQjYuI5wCLcB/s1600/Deliverance%2BKodi%2B17%2B1.png',FANART,'','')
+	process.Menu('BAMF Live Sports','http://genietvcunts.co.uk/bamffff/livesports.xml',1101,BAMF_ICON,'','','')
+	process.Menu('Fido Sports','http://bit.ly/2oBKluF',1101,FIDO_ICON,FANART,'','')
+	process.Menu('Football Replays','',400,ORIGIN_ICON,FANART,'','')
 	process.Menu('Today\'s Football','',1750,ICON,FANART,'','')
 		
 def Adult():
 	process.Menu('Just For Him','',1400,NINJA_ICON,FANART,'','')
-	process.Menu('Fido','http://fantazyrepo.uk/addonimages/fido.addon/Livetv/adult.xml',1101,FIDO_ICON,'','','')
+	process.Menu('Fido','http://bit.ly/2nGWTl6',1101,FIDO_ICON,'','','')
 	process.Menu('X Videos','',700,'https://pbs.twimg.com/profile_images/378800000578199366/cf160c1c86c13778a834bbade0c30e38.jpeg',FANART,'','')
 	process.Menu('Porn Hub','',708,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	process.Menu('X Hamster','',714,'http://www.logospike.com/wp-content/uploads/2016/05/Xhamster_Logo_03.png',FANART,'','')
@@ -211,8 +213,8 @@ def TV_Men():
 	process.Menu('Pandora\'s TV','http://genietvcunts.co.uk/PansBox/ORIGINS/tvcats.php',423,PANDORA_ICON,'','','')
 	process.Menu('Cerberus TV','http://roguemedia.x10.mx/cerberus/add-on/tvmenu.php',2301,REAPER_ICON,'','','')
 	pyramid.not_so_anon('Pyramid TV','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][WI][FA][UP][MW][SS][YO][MW][UP][YZ][WI][FA][AL][XU][QZ][MW][BU][PD][YO][QZ]Have a nice day now',RAIDER_ICON,FANART,'','','')
-	process.Menu('Tigen\'s TV','http://kodeeresurrection.com/TigensWorldtxt/TvShows/Txts/OnDemandSub.txt',1101,TIGEN_ICON,'','','')
-	process.Menu('Raiz TV','http://raiztv.co.uk/RaysRavers/list2/raiztv/tv/tv.txt',1101,RAY_ICON,'','','')
+	#process.Menu('Tigen\'s TV','http://kodeeresurrection.com/TigensWorldtxt/TvShows/Txts/OnDemandSub.txt',1101,TIGEN_ICON,'','','')
+	#process.Menu('Raiz TV','http://raiztv.co.uk/RaysRavers/list2/raiztv/tv/tv.txt',1101,RAY_ICON,'','','')
 	process.Menu('Dojo TV','http://herovision.x10host.com/dojo/tvshows/tvshows.php',2300,DOJO_ICON,'','','')
 	process.Menu('BAMF\'s Classics','http://genietvcunts.co.uk/bamffff/bamfoldtv.xml',1101,BAMF_ICON,FANART,'','')
 
@@ -224,19 +226,20 @@ def Live_Men():
 	process.Menu('BAMF IPTV','http://genietvcunts.co.uk/bamffff/BAMF.xml',1101,BAMF_ICON,FANART,'','')
 	pyramid.not_so_anon('Pyramid Live','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][UR][YY][MW][QZ][WI][MW][SS][WI][PD][YO][QZ][BU][MW][QZ][WI][YZ][UR][YY][MW][QZ][WI][MW][SS][WI][PD][YO][QZ][BU][MW][QZ][WI]Have a nice day now',RAIDER_ICON,FANART,'','','')
 	process.Menu('Ultra Live',base64.decodestring('aHR0cDovL3VsdHJhdHYubmV0MTYubmV0L2lwdHZzZXJ2ZXIvcG9ydGFsLnhtbA=='),1101,ULTRA_ICON,'','','')
-	pyramid.not_so_anon('Fido Live','[QT][LW][PD][QZ][WI][PD][AL][DE][SS][MW][FU][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YO][BU][PD][OI][MW][UP][YZ][LW][YO][LS][XU][WX][PD][LS][LS][XU][QZ][YZ]L[YO][FA][MW][WI][FA][YZ][JJ][YO][FA][MW][WI][FA]Hope you enjoy the view',FIDO_ICON,FANART,'','','')
+	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@L@LS@@EL@@ON@@OU@@EL@@PC@@OP@@LS@@EL@@ON@@OU@@EL@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('FreeView - [COLORred]VPN required if you are outside UK[/COLOR]','',1200,FREEVIEW_ICON,FANART,'','')
-	process.Menu('Lily Sports Live','http://kodeeresurrection.com/LILYSPORTStxts/home.txt',1101,'http://kodeeresurrection.com/LILYSPORTS/plugin.video.LILYSPORTS/icon.png','','','')
+	#process.Menu('Deliverence Live','http://kodeeresurrection.com/LILYSPORTStxts/home.txt',1101,'http://kodeeresurrection.com/LILYSPORTS/plugin.video.LILYSPORTS/icon.png','','','')
 	process.Menu('Supremacy Live','http://stephen-builds.uk/supremacy/LiveTV/live.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
 
 def Kids_Men():
 	process.Menu('Search','cartoon',1501,'','','','')
 	from lib.pyramid import pyramid
-	process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
-	process.Menu('Raiz Kids','http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsmain.txt',1101,RAY_ICON,'','','')
-	process.Menu('Origin Kids','',800,ORIGIN_ICON,ORIGIN_FANART,'','')
+	#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
+	#process.Menu('Raiz Kids','http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsmain.txt',1101,RAY_ICON,'','','')
+	process.Menu('Sanctuary Kids','',800,ORIGIN_ICON,ORIGIN_FANART,'','')
 	process.Menu('Oblivion Kids','http://pastebin.com/raw/Y8X1vCaV',1101,OBLIVION_ICON,'','','')
 	pyramid.not_so_anon('Pyramid Kids','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][YY][YO][LS][UP][RJ][KW][PD][QZ][QZ][MW][JJ][UP][YZ][YY][YO][LS][UP][RJ][KW][PD][QZ][QZ][MW][JJ][UP]Have a nice day now',RAIDER_ICON,FANART,'','','')
+	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@B@FS@@KM@S@ON@@OU@@KY@@PC@@NS@@SE@@UQ@@OU@@FS@@FS@@OF@@KY@@PC@@LS@@OF@@AY@@ON@@KM@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('BAMF\'s Kids','http://genietvcunts.co.uk/bamffff/lfk.xml',1101,BAMF_ICON,'','','')
 	process.Menu('Supremacy Kids Live','http://stephen-builds.uk/supremacy/Kids%20Tv/Kids%20Tv.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
 	process.Menu('Brettus Anime','',1600,BRETTUS_ICON,FANART,'','')
@@ -247,16 +250,16 @@ def Music_Men():
 	process.Menu('Search','',1503,'','','','')
 	from lib.pyramid import pyramid
 	process.Menu('Quicksilver Music','',1133,QUICK_ICON,'','','')
-	process.Menu('Rays Ravers','',1147,RAY_ICON,'','','')
+	#process.Menu('Rays Ravers','',1147,RAY_ICON,'','','')
 	pyramid.not_so_anon('Fido Live Music','[QT][LW][PD][QZ][WI][PD][AL][DE][SS][MW][FU][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YO][BU][PD][OI][MW][UP][YZ][LW][YO][LS][XU][WX][PD][LS][LS][XU][QZ][YZ]M[UR][UP][YO][RJ][YZ]M[UR][UP][YO][RJ]Hope you enjoy the view',FIDO_ICON,FANART,'','','')
-	process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
+	#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
 	pyramid.not_so_anon('Pyramid\'s Music','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][BU][UR][UP][YO][RJ][YZ][BU][UR][UP][YO][RJ]Have a nice day now',RAIDER_ICON,FANART,'','','')
 	process.Menu('Pandora\'s Music','http://genietvcunts.co.uk/PansBox/ORIGINS/seasonmusic.php',423,PANDORA_ICON,'','','')
 	process.Menu('BAMF\'s Music','http://genietvcunts.co.uk/bamffff/bamfsmusic.xml',1101,BAMF_ICON,'','','')
 
 def classic_list():
 		if ADDON.getSetting('Origin')=='true':
-			process.Menu('Origin','',4,ORIGIN_ICON,FANART,'','')
+			process.Menu('Sanctuary','',4,ORIGIN_ICON,FANART,'','')
 		if ADDON.getSetting('Pandoras_Box')=='true':
 			process.Menu('Pandora\'s Box','',900,PANDORA_ICON,FANART,'','')
 		if ADDON.getSetting('Pyramid')=='true':

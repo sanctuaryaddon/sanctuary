@@ -15,21 +15,21 @@
 		<setting id="Freeview" type="bool" label="Freeview" default="true"/>
 		<setting id="Brettus_Anime" type="bool" label="Brettus Anime" default="true"/>
 		<setting id="Oblivion" type="bool" label="Oblivion" default="true"/>
-		<setting id="Tigen's_World" type="bool" label="Tigen's World" default="true"/>
+		<setting id="Tigen's_World" type="bool" label="Tigen's World" default="false"/>
 		<setting id="Supremacy" type="bool" label="Supremacy" default="true"/>
 		<setting id="Freedom" type="bool" label="Freedom" default="true"/>
 		<setting id="Renegades" type="bool" label="Renegades" default="true"/>
 		<setting id="Just_For_Him" type="bool" label="Just for him" default="true"/>
 		<setting id="BAMF" type="bool" label="BAMF" default="true"/>
 		<setting id="Quicksilver" type="bool" label="Quicksilver" default="true"/>
-		<setting id="Rays_Ravers" type="bool" label="Rays Ravers" default="true"/>
+		<setting id="Rays_Ravers" type="bool" label="Rays Ravers" default="false"/>
 		<setting id="Silent_Hunter" type="bool" label="Silent Hunter" default="true"/>
-		<setting id="Dojo" type="bool" label="Dojo Streams" default="false"/>
+		<setting id="Dojo" type="bool" label="Dojo Streams" default="true"/>
 		<setting id="Cerberus" type="bool" label="Cerberus" default="true"/>
 		<setting id="Ultra" type="bool" label="Ultra" default="true"/>
 		<setting id="Fido" type="bool" label="Fido" default="true"/>
 		<setting id="Midnight" type="bool" label="Midnight Society" default="true"/>
-		<setting id="Deliverance" type="bool" label="Deliverance" default="true"/>
+		<setting id="Deliverance" type="bool" label="Deliverance" default="false"/>
 		<setting id="TV_Guide" type="bool" label="TV Guide" default="true"/>
 		<setting id="Today's_Football" type="bool" label="Today's Football" default="true"/>
 		<setting id="Latest_Episodes" type="bool" label="Latest Episodes" default="true"/>
