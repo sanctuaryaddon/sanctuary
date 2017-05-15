@@ -98,7 +98,7 @@ def SKindex():
 def SKindex_deliverance():
     addon_log("SKindex")
     addDir('Football Highlights','Football Highlights',1137,'http://goo.gl/TyDD6w' ,  FANART,'','','','')
-    getData('http://kodeeresurrection.com/DELIVERANCE%20TXT%20FILES/home.txt','')
+    getData('http://www.sport-xplosion.com/DELIVERANCE%20TXT%20FILES/home.txt','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 	
 def SKindex_Oblivion():

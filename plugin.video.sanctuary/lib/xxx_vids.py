@@ -558,7 +558,7 @@ def search_youporn(url):
 	Dialog = xbmcgui.Dialog()
 	Search_title = Dialog.input('Search', type=xbmcgui.INPUT_ALPHANUM)
 	Search_name = Search_title.lower()
-	url = 'http://www.youporn.com/search/?query='+Search_name.replace(' ','+')
+	url = 'https://www.youporn.com/search/?query='+Search_name.replace(' ','+')
 	youporn_video(url)
 	
 	
@@ -566,22 +566,22 @@ def youporn_collections(url):
 	html = process.OPEN_URL(url)
 	match = re.compile('<div class="collection-box-title">.+?<a href="(.+?)">(.+?)</a>.+?<img src=\'(.+?)\'',re.DOTALL).findall(html)
 	for url,name,img in match:
-		process.Menu(name,'http://youporn.com'+url,725,img,FANART,'','')
+		process.Menu(name,'https://youporn.com'+url,725,img,FANART,'','')
 
 def youporn_categories(url):	
 	html = process.OPEN_URL(url)
-	block = re.compile("<h1 class='heading4 sixteen-column'>(.+?)<a name=\"countryFlags\"",re.DOTALL).findall(html)
+	block = re.compile("<div class='row most_popular' id='categoryList'>(.+?)<div class='row' id=\"countryFlags\">",re.DOTALL).findall(html)
 	for item in block:
 		match = re.compile('<a href="(.+?)".+?<img src="(.+?)".+?alt="(.+?)"',re.DOTALL).findall(str(item))
 		for url,img,name in match:
-			process.Menu(name,'http://youporn.com'+url,725,img,FANART,'','')
+			process.Menu(name,'https://youporn.com'+url,725,img,FANART,'','')
 	
 def youporn_video(url):
 	html = process.OPEN_URL(url)
 	match = re.compile("<div class='video-box.+?<a href=\"(.+?)\".+?<img src=\"(.+?)\".+?alt='(.+?)'",re.DOTALL).findall(html)
 	for url,img,name in match:
 		name = clean_name.clean_name(name)
-		url = 'http://www.youporn.com'+url
+		url = 'https://www.youporn.com'+url
 		process.PLAY(name,url,728,img,FANART,'','')
 	next = re.compile('<link rel="next" href="(.+?)" />').findall(html)
 	for item in next:
@@ -594,7 +594,7 @@ def youporn_new_video(url):
 		match = re.compile("<div class='video-box four-column'.+?<a href=\"(.+?)\".+?<img src=\"(.+?)\".+?alt='(.+?)'",re.DOTALL).findall(str(item))
 		for url,img,name in match:
 			name = clean_name.clean_name(name)
-			url = 'http://www.youporn.com'+url
+			url = 'https://www.youporn.com'+url
 			process.PLAY(name,url,728,img,FANART,'','')
 	next = re.compile('<link rel="next" href="(.+?)" />').findall(html)
 	for item in next:
@@ -605,7 +605,7 @@ def youporn_playlink(url):
 	html = process.OPEN_URL(url)
 	block = re.compile('sources: {(.+?)}',re.DOTALL).findall(html)
 	for item in block:
-		match = re.compile("(.+?): '(.+?)',").findall(str(item))
+		match = re.compile('(.+?): "(.+?)",').findall(str(item))
 		for quality, playlink in match:
 			sources.append({'quality': quality, 'playlink': playlink})
 			if len(sources) == len(match):
@@ -727,6 +727,7 @@ def Porn_Hub():
 	process.Menu('Videos','http://www.pornhub.com/video',709,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	process.Menu('Categories','http://www.pornhub.com/categories',710,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	process.Menu('Pornstars','http://www.pornhub.com/pornstars',712,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
+	
 	process.Menu('Search','',713,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	
 def search_pornhub():
@@ -762,7 +763,8 @@ def get_video_item(url):
 	for item in next:
 		item = clean_name.clean_name(item)
 		process.Menu('Next Page',item,709,'','','','')
-		
+
+			
 def get_cat_item(url):
 	html = process.OPEN_URL(url)
 	match = re.compile('<li class=" ">.+?<a href="(.+?)".+?alt="(.+?)">.+?<img class="js-menuSwap" data-image="(.+?)"',re.DOTALL).findall(html)
@@ -786,6 +788,8 @@ def get_pornhub_playlinks(url):
 			url = sources[choice]['url']
 			isFolder=False
 			xbmc.Player().play(url)
+
+
 	
 ##################################################XVIDEOS############################################################################	
 	

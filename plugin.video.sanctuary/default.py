@@ -87,7 +87,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Team Sanctuary','UPDATE V 0.6.8\n Remove and replace dead links\n temp remove broken addons from menus until they back online .\n\nTeam Sanctuary')
+    TextBoxes('Team Sanctuary','UPDATE V 0.6.8.5\n Remove dead links\n Fixed you-porn in adult section\n Reinstate DELIVERANCE sections\n More updates to come this week .\n\nTeam Sanctuary')
 
 
 
@@ -98,9 +98,6 @@ def Main_Menu():
             xbmc.Player().play(INTRO_VID, xbmcgui.ListItem('You have been updated'))
             os.makedirs(INTRO_VID_TEMP)
     process.Menu('Big Bag \'O\' Tricks','',13,'',FANART,'','')
-    url = 'https%3a%2f%2fredirector.googlevideo.com%2fvideoplayback%3fid%3d5592f895cd80a652%26itag%3d18%26source%3dwebdrive%26requiressl%3dyes%26ttl%3dtransient%26mm%3d30%26mn%3dsn-5hne6nlk%26ms%3dnxu%26mv%3du%26pl%3d32%26sc%3dyes%26ei%3dr4T6WJeRLpTtqgXN052oDw%26mime%3dvideo%2fmp4%26lmt%3d1490764756253437%26mt%3d1492812909%26ip%3d2a02%3a5060%3ac170%3a517%3a%3a3%26ipbits%3d0%26expire%3d1492827375%26sparams%3dip%2cipbits%2cexpire%2cid%2citag%2csource%2crequiressl%2cttl%2cmm%2cmn%2cms%2cmv%2cpl%2csc%2cei%2cmime%2clmt%26signature%3d25A9649A78AAF27979C72AF81B99063B771EC958.B8692E78BFF44E282E96783C7CA27FD3C10EED14%26key%3dck2%26app%3dexplorer'
-    url = url.replace('%3a',':').replace('%2f','/')
-    process.Play('TESTies',url,906,'','','','')
     if ADDON.getSetting('View_Type')=='Classic':
         classic_list()
     elif ADDON.getSetting('View_Type')=='IMDB':
@@ -158,7 +155,7 @@ def docs():
 	
 def sports():
 	process.Menu('Renegades Darts','',2150,RENEGADES_ICON,FANART,'','')
-	#process.Menu('DELIVERANCE','',1139,'https://3.bp.blogspot.com/-mRS8HrApaaY/WOI17mTddmI/AAAAAAAAXBo/CaxwCX7o47QZxaV6W1Qeff39ZyQjYuI5wCLcB/s1600/Deliverance%2BKodi%2B17%2B1.png',FANART,'','')
+	process.Menu('DELIVERANCE','',1139,'https://3.bp.blogspot.com/-mRS8HrApaaY/WOI17mTddmI/AAAAAAAAXBo/CaxwCX7o47QZxaV6W1Qeff39ZyQjYuI5wCLcB/s1600/Deliverance%2BKodi%2B17%2B1.png',FANART,'','')
 	process.Menu('BAMF Live Sports','http://genietvcunts.co.uk/bamffff/livesports.xml',1101,BAMF_ICON,'','','')
 	process.Menu('Fido Sports','http://bit.ly/2oBKluF',1101,FIDO_ICON,FANART,'','')
 	process.Menu('Football Replays','',400,ORIGIN_ICON,FANART,'','')
@@ -228,7 +225,7 @@ def Live_Men():
 	process.Menu('Ultra Live',base64.decodestring('aHR0cDovL3VsdHJhdHYubmV0MTYubmV0L2lwdHZzZXJ2ZXIvcG9ydGFsLnhtbA=='),1101,ULTRA_ICON,'','','')
 	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@L@LS@@EL@@ON@@OU@@EL@@PC@@OP@@LS@@EL@@ON@@OU@@EL@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('FreeView - [COLORred]VPN required if you are outside UK[/COLOR]','',1200,FREEVIEW_ICON,FANART,'','')
-	#process.Menu('Deliverence Live','http://kodeeresurrection.com/LILYSPORTStxts/home.txt',1101,'http://kodeeresurrection.com/LILYSPORTS/plugin.video.LILYSPORTS/icon.png','','','')
+	process.Menu('Deliverence Live','http://www.sport-xplosion.com/DELIVERANCE%20TXT%20FILES/home.txt',1101,'http://kodeeresurrection.com/LILYSPORTS/plugin.video.LILYSPORTS/icon.png','','','')
 	process.Menu('Supremacy Live','http://stephen-builds.uk/supremacy/LiveTV/live.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
 
 def Kids_Men():
@@ -258,7 +255,7 @@ def Music_Men():
 	process.Menu('BAMF\'s Music','http://genietvcunts.co.uk/bamffff/bamfsmusic.xml',1101,BAMF_ICON,'','','')
 
 def classic_list():
-		if ADDON.getSetting('Origin')=='true':
+		if ADDON.getSetting('Sanctuary')=='true':
 			process.Menu('Sanctuary','',4,ORIGIN_ICON,FANART,'','')
 		if ADDON.getSetting('Pandoras_Box')=='true':
 			process.Menu('Pandora\'s Box','',900,PANDORA_ICON,FANART,'','')
