@@ -26,11 +26,12 @@
 '''
 import xbmcplugin, xbmc, xbmcaddon, urllib, xbmcgui, traceback, requests, re, os, base64
 from lib import process
-from lib import extract,downloader
+from lib import extract,downloader, uservar
 import zipfile
 import time
 import ntpath
 import os, shutil, xbmcgui
+from datetime import date, datetime, timedelta
 addon_id = 'plugin.video.sanctuary'
 Dialog = xbmcgui.Dialog()
 addons = xbmc.translatePath('special://home/addons/')
@@ -64,7 +65,7 @@ FIDO_ICON = base_icons + 'fido.png'
 MIDNIGHT_IMAGE = base_icons + 'midnight2.png'
 INTRO_VID = base_icons + 'Intro.mp4'
 INTRO_VID_TEMP = xbmc.translatePath('special://home/addons/plugin.video.sanctuary/DELETE_ME')
-
+quantum = xbmc.translatePath('special://home/addons/plugin.video.quantum/')
 ADDONS      =  xbmc.translatePath(os.path.join('special://home','addons',''))
 addon_id='plugin.video.sanctuary'
 current_folder = ADDONS+'/'+addon_id+'/'
@@ -89,13 +90,13 @@ def TextBoxes(heading,announce):
   TextBox()
   TextBox()
 
-if not os.path.exists(full_file):
-    Open = open(full_file,'w+')
-    TextBoxes('Team Sanctuary','UPDATE V 0.6.8.5\n Remove dead links\n Fixed you-porn in adult section\n Reinstate DELIVERANCE sections\n More updates to come this week .\n\nTeam Sanctuary')
+#if not os.path.exists(full_file):
+ #   Open = open(full_file,'w+')
+  #  TextBoxes('Team Sanctuary','UPDATE V 0.7.0\n Remove dead links\n Fixed you-porn in adult section\n Reinstate DELIVERANCE sections\n More updates #to come this week .\n\nTeam Sanctuary')
 
 def Force_Addon_Download():
    
-    url = 'https://github.com/sanctuaryaddon/sanctuary/raw/master/_repo/plugin.video.sanctuary/plugin.video.quantum-0.0.1.zip
+    url = 'https://github.com/sanctuaryaddon/sanctuary/raw/master/_repo/plugin.video.quantum/plugin.video.quantum-0.0.1.zip'
     name = 'plugin.video.quantum'
 	
     Addon_Extract2(url,name)
@@ -103,7 +104,7 @@ def Force_Addon_Download():
 def Addon_Extract2(url,name):
     path = xbmc.translatePath(os.path.join('special://home/addons','packages'))
     dp = xbmcgui.DialogProgress()
-    dp.create("Quantum","Downloading Content",'', 'Please Wait')
+    dp.create("Quantum","Downloading our New Addon",'', 'Please Wait')
     lib=os.path.join(path, name+'.zip')
     try:
         os.remove(lib)
@@ -117,49 +118,127 @@ def Addon_Extract2(url,name):
     print addonfolder
     print '======================================='
     extract.all(lib,addonfolder,dp)
+    killxbmc()
+
+HOME           = xbmc.translatePath('special://home/')
+USERDATA       = os.path.join(HOME,      'userdata')
+ADDONDATA      = os.path.join(USERDATA,  'addon_data', addon_id)
+WIZLOG         = os.path.join(ADDONDATA, 'wizard.log')
+ADDONTITLE     = uservar.ADDONTITLE
+PROFILE        = xbmc.translatePath('special://profile/')
+LOGFILES       = ['xbmc.log', 'xbmc.old.log', 'kodi.log', 'kodi.old.log', 'spmc.log', 'spmc.old.log', 'tvmc.log', 'tvmc.old.log']
+ADDONS         = os.path.join(HOME,     'addons')
+PACKAGES       = os.path.join(ADDONS,   'packages')
+HUB       = os.path.join(ADDONS,   'HUB')
+def platform():
+	if xbmc.getCondVisibility('system.platform.android'):   return 'android'
+	elif xbmc.getCondVisibility('system.platform.linux'):   return 'linux'
+	elif xbmc.getCondVisibility('system.platform.windows'): return 'windows'
+	elif xbmc.getCondVisibility('system.platform.osx'):	    return 'osx'
+	elif xbmc.getCondVisibility('system.platform.atv2'):    return 'atv2'
+	elif xbmc.getCondVisibility('system.platform.ios'):	    return 'ios'
+def log(log):
+	xbmc.log("[%s]: %s" % (ADDONTITLE, log))
+	if not os.path.exists(ADDONDATA): os.makedirs(ADDONDATA)
+	if not os.path.exists(WIZLOG): f = open(WIZLOG, 'w'); f.close()
+	with open(WIZLOG, 'a') as f:
+		line = "[%s %s] %s" % (datetime.now().date(), str(datetime.now().time())[:8], log)
+		f.write(line.rstrip('\r\n')+'\n')
+    
+def killxbmc():
+	choice = Dialog.yesno('Force Close Kodi', 'after force close please use our new addon QUANTUM', 'Would you like to continue?', nolabel='No, Cancel',yeslabel='Yes, Close')
+	if choice == 0: return
+	elif choice == 1: pass
+	myplatform = platform()
+	log("Platform: " + str(myplatform))
+	os._exit(1)
+	log("Force close failed!  Trying alternate methods.")
+	if myplatform == 'osx': # OSX
+		log("############ try osx force close #################")
+		try: os.system('killall -9 XBMC')
+		except: pass
+		try: os.system('killall -9 Kodi')
+		except: pass
+		Dialog.ok("[COLOR=red][B]WARNING !!![/COLOR][/B]", "If you\'re seeing this message it means the force close", "was unsuccessful. Please force close XBMC/Kodi [COLOR=lime]DO NOT[/COLOR] exit cleanly via the menu.",'')
+	elif myplatform == 'linux': #Linux
+		log("############ try linux force close #################")
+		try: os.system('killall XBMC')
+		except: pass
+		try: os.system('killall Kodi')
+		except: pass
+		try: os.system('killall -9 xbmc.bin')
+		except: pass
+		try: os.system('killall -9 kodi.bin')
+		except: pass
+		Dialog.ok("[COLOR=red][B]WARNING !!![/COLOR][/B]", "If you\'re seeing this message it means the force close", "was unsuccessful. Please force close XBMC/Kodi [COLOR=lime]DO NOT[/COLOR] exit cleanly via the menu.",'')
+	elif myplatform == 'android': # Android 
+		log("############ try android force close #################")
+		try: os.system('adb shell am force-stop org.xbmc.kodi')
+		except: pass
+		try: os.system('adb shell am force-stop org.kodi')
+		except: pass
+		try: os.system('adb shell am force-stop org.xbmc.xbmc')
+		except: pass
+		try: os.system('adb shell am force-stop org.xbmc')
+		except: pass		
+		try: os.system('adb shell am force-stop com.gadgetcity.itvmc')
+		except: pass		
+		try: os.system('adb shell kill org.xbmc.kodi')
+		except: pass
+		try: os.system('adb shell kill org.kodi')
+		except: pass
+		try: os.system('adb shell kill org.xbmc.xbmc')
+		except: pass
+		try: os.system('adb shell kill org.xbmc')
+		except: pass
+		try: os.system('adb shell kill com.gadgetcity.itvmc')
+		except: pass
+		try: os.system('Process.killProcess(android.os.Process.org.xbmc,kodi());')
+		except: pass
+		try: os.system('Process.killProcess(android.os.Process.org.kodi());')
+		except: pass
+		try: os.system('Process.killProcess(android.os.Process.org.xbmc.xbmc());')
+		except: pass
+		try: os.system('Process.killProcess(android.os.Process.org.xbmc());')
+		except: pass
+		try: os.system('Process.killProcess(android.os.Process.com.gadgetcity.itvmc());')
+		except: pass
+		Dialog.ok(ADDONTITLE, "Press the HOME button on your remote and [COLOR=red][B]FORCE STOP[/COLOR][/B] KODI via the Manage Installed Applications menu in settings on your Amazon home page then re-launch KODI")
+	elif myplatform == 'windows': # Windows
+		log("############ try windows force close #################")
+		try:
+			os.system('@ECHO off')
+			os.system('tskill XBMC.exe')
+		except: pass
+		try:
+			os.system('@ECHO off')
+			os.system('tskill Kodi.exe')
+		except: pass
+		try:
+			os.system('@ECHO off')
+			os.system('TASKKILL /im Kodi.exe /f')
+		except: pass
+		try:
+			os.system('@ECHO off')
+			os.system('TASKKILL /im XBMC.exe /f')
+		except: pass
+		Dialog.ok("[COLOR=red][B]WARNING !!![/COLOR][/B]", "If you\'re seeing this message it means the force close", "was unsuccessful. Please force close XBMC/Kodi [COLOR=lime]DO NOT[/COLOR] exit cleanly via the menu.","Use task manager and NOT ALT F4")
+	else: #ATV
+		log("############ try atv force close #################")
+		try: os.system('killall AppleTV')
+		except: pass
+		log("############ try raspbmc force close #################") #OSMC / Raspbmc
+		try: os.system('sudo initctl stop kodi')
+		except: pass
+		try: os.system('sudo initctl stop xbmc')
+		except: pass
+		Dialog.ok("[COLOR=red][B]WARNING !!![/COLOR][/B]", "If you\'re seeing this message it means the force close", "was unsuccessful. Please force close XBMC/Kodi [COLOR=lime]DO NOT[/COLOR] exit via the menu.","iOS detected. Press and hold both the Sleep/Wake and Home button for at least 10 seconds, until you see the Apple logo.")
 
 def Main_Menu():
-    Force_Addon_Download()
-    if not os.path.exists(INTRO_VID_TEMP):
-        if ADDON.getSetting('Intro_Vid')=='true':
-            xbmc.Player().play(INTRO_VID, xbmcgui.ListItem('You have been updated'))
-            os.makedirs(INTRO_VID_TEMP)
-    process.Menu('Big Bag \'O\' Tricks','',13,'',FANART,'','')
-    if ADDON.getSetting('View_Type')=='Classic':
-        classic_list()
-    elif ADDON.getSetting('View_Type')=='IMDB':
-        IMDB_list()
-    elif ADDON.getSetting('View_Type')=='TV Shows':
-		TV_Men()
-    elif ADDON.getSetting('View_Type')=='Movies':
-		Movie_Men()
-    elif ADDON.getSetting('View_Type')=='Sport':
-		sports()
-    elif ADDON.getSetting('View_Type')=='Music':
-		Music_Men()
-    elif ADDON.getSetting('View_Type')=='Kids':
-		Kids_Men()
-    elif ADDON.getSetting('View_Type')=='24/7':
-		twenty47()
-    elif ADDON.getSetting('View_Type')=='Docs':
-		docs()
-    elif ADDON.getSetting('View_Type')=='Live':
-		Live_Men()
-    elif ADDON.getSetting('View_Type')=='Adult':
-		Adult()
-    elif ADDON.getSetting('View_Type')=='Menu':
-		process.Menu('24/7','',38,'',FANART,'','')
-		process.Menu('Documentaries','',39,'',FANART,'','')
-		process.Menu('Kids','',33,'',FANART,'','')
-		process.Menu('Live TV','',32,'',FANART,'','')
-		process.Menu('Movies','',30,'',FANART,'','')
-		process.Menu('Music','',34,'',FANART,'','')
-		process.Menu('Sports','',40,'',FANART,'','')
-		process.Menu('TV Shows','',31,'',FANART,'','')
-		if Adult_Pass == Adult_Default:
-			process.Menu('Adult','',37,'',FANART,'','')
-		process.Menu('Add-on\'s','',35,'',FANART,'','')
-		process.setView('movies', 'INFO')
+    if not os.path.exists(quantum):
+        Force_Addon_Download()
+    process.Menu('PLEASE REMOVE THIS ADDON AND USE OUR NEW ADDON QUANTUM','','','',FANART,'','')
+    process.Menu('support can be found on our quantum facebook group','','','',FANART,'','')
 
 def IMDB_list():
 	process.Menu('TV Shows','',300,'','','','')

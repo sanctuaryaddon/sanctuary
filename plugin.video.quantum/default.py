@@ -87,7 +87,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Quantum','UPDATE V 0.6.9\n Rebrand of our addon\n Due to the previous developer still being pestered for support he has requested that we rebrand \n\nWelcome To Team Quantum')
+    TextBoxes('Quantum','Welcome\n Rebrand of our addon\n Due to the previous developer still being pestered for support he has requested that we rebrand \n\nWelcome To Team Quantum')
 
 
 
