@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Sanctuary Add-on
+    Qauntum Add-on
     Copyright (C) 2016 Origin
 
     This program is free software: you can redistribute it and/or modify
@@ -26,24 +26,20 @@
 '''
 import xbmcplugin, xbmc, xbmcaddon, urllib, xbmcgui, traceback, requests, re, os, base64
 from lib import process
-from lib import extract,downloader
-import zipfile
-import time
-import ntpath
 import os, shutil, xbmcgui
-addon_id = 'plugin.video.sanctuary'
+addon_id = 'plugin.video.quantum'
 Dialog = xbmcgui.Dialog()
 addons = xbmc.translatePath('special://home/addons/')
 ADDON = xbmcaddon.Addon(id=addon_id)
-ADDON_PATH = xbmc.translatePath('special://home/addons/plugin.video.sanctuary/')
+ADDON_PATH = xbmc.translatePath('special://home/addons/plugin.video.quantum/')
 ICON = ADDON_PATH + 'icon.png'
 ADDON = xbmcaddon.Addon(id=addon_id)
 FANART = ADDON_PATH + 'fanart.jpg'
 Adult_Pass = ADDON.getSetting('Adult')
 Adult_Default = ADDON.getSetting('Porn_Pass')
 base_icons = 'http://herovision.x10host.com/freeview/'
-ORIGIN_ICON = base_icons + 'icon.png'
-ORIGIN_FANART = base_icons + 'fanart.jpg'
+ORIGIN_ICON = ADDON_PATH + 'icon.png'
+ORIGIN_FANART = ADDON_PATH + 'fanart.jpg'
 PANDORA_ICON = 'https://s32.postimg.org/ov9s6ipf9/icon.png'
 RAIDER_ICON = base_icons + 'pyramid.png'
 FREEVIEW_ICON = base_icons + 'freeview.png'
@@ -63,10 +59,10 @@ ULTRA_ICON = base_icons + 'Ultra.png'
 FIDO_ICON = base_icons + 'fido.png'
 MIDNIGHT_IMAGE = base_icons + 'midnight2.png'
 INTRO_VID = base_icons + 'Intro.mp4'
-INTRO_VID_TEMP = xbmc.translatePath('special://home/addons/plugin.video.sanctuary/DELETE_ME')
+INTRO_VID_TEMP = xbmc.translatePath('special://home/addons/plugin.video.quantum/DELETE_ME')
 
 ADDONS      =  xbmc.translatePath(os.path.join('special://home','addons',''))
-addon_id='plugin.video.sanctuary'
+addon_id='plugin.video.quantum'
 current_folder = ADDONS+'/'+addon_id+'/'
 full_file = current_folder.replace('\\','/') + '/welcome.txt'
 
@@ -91,39 +87,16 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Team Sanctuary','UPDATE V 0.6.8.5\n Remove dead links\n Fixed you-porn in adult section\n Reinstate DELIVERANCE sections\n More updates to come this week .\n\nTeam Sanctuary')
+    TextBoxes('Quantum','UPDATE V 0.6.9\n Rebrand of our addon\n Due to the previous developer still being pestered for support he has requested that we rebrand \n\nWelcome To Team Quantum')
 
-def Force_Addon_Download():
-   
-    url = 'https://github.com/sanctuaryaddon/sanctuary/raw/master/_repo/plugin.video.sanctuary/plugin.video.quantum-0.0.1.zip
-    name = 'plugin.video.quantum'
-	
-    Addon_Extract2(url,name)
-    
-def Addon_Extract2(url,name):
-    path = xbmc.translatePath(os.path.join('special://home/addons','packages'))
-    dp = xbmcgui.DialogProgress()
-    dp.create("Quantum","Downloading Content",'', 'Please Wait')
-    lib=os.path.join(path, name+'.zip')
-    try:
-        os.remove(lib)
-    except:
-        pass
-    downloader.download(url, lib, dp)
-    addonfolder = xbmc.translatePath(os.path.join('special://home','addons'))
-    time.sleep(2)
-    dp.update(0,"", "Extracting Zip Please Wait")
-    print '======================================='
-    print addonfolder
-    print '======================================='
-    extract.all(lib,addonfolder,dp)
+
+
 
 def Main_Menu():
-    Force_Addon_Download()
-    if not os.path.exists(INTRO_VID_TEMP):
-        if ADDON.getSetting('Intro_Vid')=='true':
-            xbmc.Player().play(INTRO_VID, xbmcgui.ListItem('You have been updated'))
-            os.makedirs(INTRO_VID_TEMP)
+    #if not os.path.exists(INTRO_VID_TEMP):
+        #if ADDON.getSetting('Intro_Vid')=='true':
+            #xbmc.Player().play(INTRO_VID, xbmcgui.ListItem('You have been updated'))
+            #os.makedirs(INTRO_VID_TEMP)
     process.Menu('Big Bag \'O\' Tricks','',13,'',FANART,'','')
     if ADDON.getSetting('View_Type')=='Classic':
         classic_list()
@@ -169,7 +142,7 @@ def IMDB_list():
 		
 def twenty47():
 	from lib.pyramid import pyramid
-	process.Menu('Sanctuary 24/7 Cartoons','',812,ORIGIN_ICON,FANART,'','')
+	process.Menu('quantum 24/7 Cartoons','',812,ORIGIN_ICON,FANART,'','')
 	pyramid.not_so_anon('Fido 24/7','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@@KE@@AV@-@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@PC@@KE@@AV@@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('Pyramid 24/7','http://tombraiderbuilds.co.uk/addon/tvseries/247shows/247shows.txt',1101,RAIDER_ICON,'','','')
 	process.Menu('Supremacy 24/7','http://stephen-builds.uk/supremacy/24-7/24-7.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
@@ -260,7 +233,7 @@ def Kids_Men():
 	from lib.pyramid import pyramid
 	#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
 	#process.Menu('Raiz Kids','http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsmain.txt',1101,RAY_ICON,'','','')
-	process.Menu('Sanctuary Kids','',800,ORIGIN_ICON,ORIGIN_FANART,'','')
+	process.Menu('Quantum Kids','',800,ORIGIN_ICON,ORIGIN_FANART,'','')
 	process.Menu('Oblivion Kids','http://pastebin.com/raw/Y8X1vCaV',1101,OBLIVION_ICON,'','','')
 	pyramid.not_so_anon('Pyramid Kids','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][YY][YO][LS][UP][RJ][KW][PD][QZ][QZ][MW][JJ][UP][YZ][YY][YO][LS][UP][RJ][KW][PD][QZ][QZ][MW][JJ][UP]Have a nice day now',RAIDER_ICON,FANART,'','','')
 	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@B@FS@@KM@S@ON@@OU@@KY@@PC@@NS@@SE@@UQ@@OU@@FS@@FS@@OF@@KY@@PC@@LS@@OF@@AY@@ON@@KM@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
@@ -282,8 +255,8 @@ def Music_Men():
 	process.Menu('BAMF\'s Music','http://genietvcunts.co.uk/bamffff/bamfsmusic.xml',1101,BAMF_ICON,'','','')
 
 def classic_list():
-		if ADDON.getSetting('Sanctuary')=='true':
-			process.Menu('Sanctuary','',4,ORIGIN_ICON,FANART,'','')
+		if ADDON.getSetting('Quantum')=='true':
+			process.Menu('Quantum','',4,ORIGIN_ICON,FANART,'','')
 		if ADDON.getSetting('Pandoras_Box')=='true':
 			process.Menu('Pandora\'s Box','',900,PANDORA_ICON,FANART,'','')
 		if ADDON.getSetting('Pyramid')=='true':

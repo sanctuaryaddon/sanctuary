@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sanctuary" name="Sanctuary" version="0.6.9" provider-name="Communal">
+<addon id="plugin.video.quantum" name="Quantum" version="0.0.1" provider-name="Communal">
   <requires>
 	<import addon="script.module.beautifulsoup" version="3.2.1"/>
 	<import addon="script.module.beautifulsoup4" />
@@ -22,8 +22,8 @@
 		<provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-	<summary lang="en">Sanctuary</summary>
-	<description lang="en">our facebook group</description>
+	<summary lang="en">Quantum</summary>
+	<description lang="en">Visit our facebook group for any issues</description>
 	<disclaimer lang="en">The author neither hosts or stores any content, the author has no affiliation with content hosts</disclaimer>
 	<platform>all</platform>
   </extension>
