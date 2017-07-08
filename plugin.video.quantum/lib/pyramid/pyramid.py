@@ -55,6 +55,7 @@ FANART = os.path.join(home, 'fanart.jpg')
 source_file = os.path.join(profile, 'source_file')
 functions_dir = profile
 
+
 downloader = downloader.SimpleDownloader()
 debug = addon.getSetting('debug')
 if os.path.exists(favorites)==True:
@@ -91,8 +92,8 @@ def makeRequest(url, headers=None):
 				
 def SKindex():
     addon_log("SKindex")
-    addDir('[B][COLOR gold]THE PYRAMID SEARCH[/B][/COLOR]','https://archive.org/download/tombebbington4_virginmedia_Home/moviesa-z.txt',1141,'http://previews.123rf.com/images/markinv/markinv1212/markinv121200020/17010740-All-seeing-eye-Stock-Vector-horus-eye-egyptian.jpg' ,  FANART,'','','','')
-    getData('https://ia801502.us.archive.org/23/items/tombebbington4_virginmedia_Home/home.txt','')
+    addDir('[B][COLOR gold]THE PYRAMID SEARCH[/B][/COLOR]','http://pyramid.areshost6.seedr.io/pyramid/moviesa-z.txt',1141,'http://previews.123rf.com/images/markinv/markinv1212/markinv121200020/17010740-All-seeing-eye-Stock-Vector-horus-eye-egyptian.jpg' ,  FANART,'','','','')
+    getData('http://pyramid.areshost6.seedr.io/pyramid/home.txt','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def SKindex_deliverance():
@@ -136,7 +137,7 @@ def SKindex_Fido():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 	
 def SKindex_Rays():
-    getData('http://raiztv.co.uk/RaysRavers/list2/dir.txt','')
+    getData('http://raiztv.co.uk/RaysRavers/list2/RaysRaversRadioMenu.txt','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 	
 def SKindex_ProjectD():

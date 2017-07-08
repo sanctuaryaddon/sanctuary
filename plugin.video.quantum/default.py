@@ -58,6 +58,7 @@ DOJO_ICON = base_icons + 'dojo.png'
 ULTRA_ICON = base_icons + 'Ultra.png'
 FIDO_ICON = base_icons + 'fido.png'
 MIDNIGHT_IMAGE = base_icons + 'midnight2.png'
+SUPREM_ICON = base_icons + 'supremacy.png'
 INTRO_VID = base_icons + 'Intro.mp4'
 INTRO_VID_TEMP = xbmc.translatePath('special://home/addons/plugin.video.quantum/DELETE_ME')
 
@@ -87,7 +88,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Quantum','Welcome\n Rebrand of our addon\n Due to the previous developer still being pestered for support he has requested that we rebrand \n\nWelcome To Team Quantum')
+    TextBoxes('Quantum',' GENERAL stuff fixed still working through to fix other sections \n\nTeam Quantum')
 
 
 
@@ -98,6 +99,8 @@ def Main_Menu():
             #xbmc.Player().play(INTRO_VID, xbmcgui.ListItem('You have been updated'))
             #os.makedirs(INTRO_VID_TEMP)
     process.Menu('Big Bag \'O\' Tricks','',13,'',FANART,'','')
+    #process.Play('test','https://www.laola1.tv/en-at/amp-video/pdc-european-darts-tour-leverkusen-final-day-afternoon-session-len',906,'',FANART,'','')
+    
     if ADDON.getSetting('View_Type')=='Classic':
         classic_list()
     elif ADDON.getSetting('View_Type')=='IMDB':
@@ -145,7 +148,7 @@ def twenty47():
 	process.Menu('quantum 24/7 Cartoons','',812,ORIGIN_ICON,FANART,'','')
 	pyramid.not_so_anon('Fido 24/7','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@@KE@@AV@-@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@PC@@KE@@AV@@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('Pyramid 24/7','http://tombraiderbuilds.co.uk/addon/tvseries/247shows/247shows.txt',1101,RAIDER_ICON,'','','')
-	process.Menu('Supremacy 24/7','http://stephen-builds.uk/supremacy/24-7/24-7.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
+	process.Menu('Supremacy 24/7','http://stephen-builds.uk/supremacy/24-7/24-7.txt',1101,SUPREM_ICON,'','','')
 	#process.Random_play('Raiz TV - Play 10 Random Cartoons',1154,url='http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsrandom.txt',image=RAY_ICON,isFolder=False)
 	
 def docs():
@@ -207,8 +210,8 @@ def TV_Men():
 	process.Menu('Search','TV',1501,'','','','')
 	process.Menu('Latest Episodes','',3,ICON,FANART,'','')
 	from lib.pyramid import pyramid
-	process.Menu('Pandora\'s TV','http://genietvcunts.co.uk/PansBox/ORIGINS/tvcats.php',423,PANDORA_ICON,'','','')
-	process.Menu('Cerberus TV','http://roguemedia.x10.mx/cerberus/add-on/tvmenu.php',2301,REAPER_ICON,'','','')
+	#process.Menu('Pandora\'s TV','http://genietvcunts.co.uk/PansBox/ORIGINS/tvcats.php',423,PANDORA_ICON,'','','')
+	#process.Menu('Cerberus TV','http://roguemedia.x10.mx/cerberus/add-on/tvmenu.php',2301,REAPER_ICON,'','','')
 	pyramid.not_so_anon('Pyramid TV','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][WI][FA][UP][MW][SS][YO][MW][UP][YZ][WI][FA][AL][XU][QZ][MW][BU][PD][YO][QZ]Have a nice day now',RAIDER_ICON,FANART,'','','')
 	#process.Menu('Tigen\'s TV','http://kodeeresurrection.com/TigensWorldtxt/TvShows/Txts/OnDemandSub.txt',1101,TIGEN_ICON,'','','')
 	#process.Menu('Raiz TV','http://raiztv.co.uk/RaysRavers/list2/raiztv/tv/tv.txt',1101,RAY_ICON,'','','')
@@ -226,7 +229,7 @@ def Live_Men():
 	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@L@LS@@EL@@ON@@OU@@EL@@PC@@OP@@LS@@EL@@ON@@OU@@EL@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('FreeView - [COLORred]VPN required if you are outside UK[/COLOR]','',1200,FREEVIEW_ICON,FANART,'','')
 	process.Menu('Deliverence Live','http://www.sport-xplosion.com/DELIVERANCE%20TXT%20FILES/home.txt',1101,'http://kodeeresurrection.com/LILYSPORTS/plugin.video.LILYSPORTS/icon.png','','','')
-	process.Menu('Supremacy Live','http://stephen-builds.uk/supremacy/LiveTV/live.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
+	process.Menu('Supremacy Live','http://stephen-builds.uk/supremacy/LiveTV/live.txt',1101,SUPREM_ICON,'','','')
 
 def Kids_Men():
 	process.Menu('Search','cartoon',1501,'','','','')
@@ -238,7 +241,7 @@ def Kids_Men():
 	pyramid.not_so_anon('Pyramid Kids','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][YY][YO][LS][UP][RJ][KW][PD][QZ][QZ][MW][JJ][UP][YZ][YY][YO][LS][UP][RJ][KW][PD][QZ][QZ][MW][JJ][UP]Have a nice day now',RAIDER_ICON,FANART,'','','')
 	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@B@FS@@KM@S@ON@@OU@@KY@@PC@@NS@@SE@@UQ@@OU@@FS@@FS@@OF@@KY@@PC@@LS@@OF@@AY@@ON@@KM@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('BAMF\'s Kids','http://genietvcunts.co.uk/bamffff/lfk.xml',1101,BAMF_ICON,'','','')
-	process.Menu('Supremacy Kids Live','http://stephen-builds.uk/supremacy/Kids%20Tv/Kids%20Tv.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png','','','')
+	process.Menu('Supremacy Kids Live','http://stephen-builds.uk/supremacy/Kids%20Tv/Kids%20Tv.txt',1101,SUPREM_ICON,'','','')
 	process.Menu('Brettus Anime','',1600,BRETTUS_ICON,FANART,'','')
 
 	
@@ -270,7 +273,7 @@ def classic_list():
 		if ADDON.getSetting("Tigen's_World")=='true':
 			process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
 		if ADDON.getSetting('Supremacy')=='true':
-			process.Menu('Supremacy','',1131,'http://www.stephen-builds.co.uk/wizard/icon.png',FANART,'','')
+			process.Menu('Supremacy','',1131,SUPREM_ICON,FANART,'','')
 		if ADDON.getSetting('Renegades')=='true':
 			process.Menu('Renegades Darts','',2150,RENEGADES_ICON,FANART,'','')
 		if ADDON.getSetting('Just_For_Him')=='true':
@@ -339,13 +342,13 @@ def Reaper_Loop(url):
 
 
 def Latest_Episodes():
-    process.Menu('Pandora Latest Episodes','http://genietvcunts.co.uk/PansBox/ORIGINS/recenttv.php',426,ICON,FANART,'','')
+    #process.Menu('Pandora Latest Episodes','http://genietvcunts.co.uk/PansBox/ORIGINS/recenttv.php',426,ICON,FANART,'','')
     process.Menu('TV Schedule','http://www.tvmaze.com/calendar',6,ICON,FANART,'','')
 
 def Recent_Movies():
-    process.Menu('Pandora Recent Movies','http://genietvcunts.co.uk/PansBox/ORIGINS/recentmovies.php',426,PANDORA_ICON,FANART,'','')
-    process.Menu('Pyramid Recent Movies','http://tombraiderbuilds.co.uk/addon/movies/New%20Releaes/newreleases.txt',1101,RAIDER_ICON,FANART,'','')
-    process.Menu('Supremacy Recent Movies','https://simplekore.com/wp-content/uploads/file-manager/steboy11/New%20Releases/New%20Releases.txt',1101,'http://www.stephen-builds.co.uk/wizard/icon.png',FANART,'','')
+    #process.Menu('Pandora Recent Movies','http://genietvcunts.co.uk/PansBox/ORIGINS/recentmovies.php',426,PANDORA_ICON,FANART,'','')
+    process.Menu('Pyramid Recent Movies','http://pyramid.areshost6.seedr.io/pyramid/newreleases.txt',1101,RAIDER_ICON,FANART,'','')
+    process.Menu('Supremacy Recent Movies','https://simplekore.com/wp-content/uploads/file-manager/steboy11/New%20Releases/New%20Releases.txt',1101,SUPREM_ICON,FANART,'','')
 
 
 def TV_Calender_Day(url):
