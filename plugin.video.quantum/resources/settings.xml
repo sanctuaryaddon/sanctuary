@@ -10,6 +10,7 @@
     </category>
     <category label="Personalise Main Menu">
 		<setting id="Quantum" type="bool" label="Quantum" default="true"/>
+		<setting id="apprentice" type="bool" label="Apprentice" default="true"/>
 		<setting id="Pandoras_Box" type="bool" label="Pandoras Box" default="false"/>
 		<setting id="Pyramid" type="bool" label="Pyramid" default="true"/>
 		<setting id="Freeview" type="bool" label="Freeview" default="true"/>

@@ -24,9 +24,13 @@
     If i have used code that you wrote i can only apologise for not thanking you personally and ensure you no offence was meant.
     Just sometimes i find it best not to rewrite what works well, mostly to a higher standard that my current understanding
 '''
-import xbmcplugin, xbmc, xbmcaddon, urllib, xbmcgui, traceback, requests, re, os, base64
+import xbmcplugin, xbmc, xbmcaddon, urllib, xbmcgui, traceback, requests, re, os, base64 , liveresolver 
 from lib import process
+from BeautifulSoup import BeautifulSoup
 import os, shutil, xbmcgui
+from lib import cloudflare
+from lib.modules import cfscrape
+scraper = cfscrape.create_scraper()
 addon_id = 'plugin.video.quantum'
 Dialog = xbmcgui.Dialog()
 addons = xbmc.translatePath('special://home/addons/')
@@ -59,6 +63,7 @@ ULTRA_ICON = base_icons + 'Ultra.png'
 FIDO_ICON = base_icons + 'fido.png'
 MIDNIGHT_IMAGE = base_icons + 'midnight2.png'
 SUPREM_ICON = base_icons + 'supremacy.png'
+app_icon = base_icons + 'app.jpg'
 INTRO_VID = base_icons + 'Intro.mp4'
 INTRO_VID_TEMP = xbmc.translatePath('special://home/addons/plugin.video.quantum/DELETE_ME')
 
@@ -88,7 +93,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Quantum',' GENERAL stuff fixed still working through to fix other sections \n\nTeam Quantum')
+    TextBoxes('Quantum',' Brand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \n Fixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \n Added new section for Fido 24/7 which is also in his stand alone add-on \n MORE STUFF COMING SOON :) :)\nTeam Quantum')
 
 
 
@@ -99,8 +104,8 @@ def Main_Menu():
             #xbmc.Player().play(INTRO_VID, xbmcgui.ListItem('You have been updated'))
             #os.makedirs(INTRO_VID_TEMP)
     process.Menu('Big Bag \'O\' Tricks','',13,'',FANART,'','')
-    #process.Play('test','https://www.laola1.tv/en-at/amp-video/pdc-european-darts-tour-leverkusen-final-day-afternoon-session-len',906,'',FANART,'','')
-    
+    #process.PLAY('test','http://daclips.in/embed-secaio8j2y8i-1238x696.html',906,'',FANART,'','')
+    #process.Menu('dizi','',100051,'',FANART,'','')
     if ADDON.getSetting('View_Type')=='Classic':
         classic_list()
     elif ADDON.getSetting('View_Type')=='IMDB':
@@ -135,8 +140,295 @@ def Main_Menu():
 		if Adult_Pass == Adult_Default:
 			process.Menu('Adult','',37,'',FANART,'','')
 		process.Menu('Add-on\'s','',35,'',FANART,'','')
+		#process.Menu('live test','',100035,'',FANART,'','')
+		#process.Menu('most popular','',100036,'',FANART,'','')
+		#process.Menu('returndates','',100038,'',FANART,'','')
+		#process.Menu('table','',100050,'',FANART,'','')
 		process.setView('movies', 'INFO')
+ 
 
+
+        
+def dmain():
+    html = requests.get('https://www.laola1.tv/en-int/block/darts-europe-pdc-europe-european-tour-latest-videos').content
+    block = re.compile('<h2>European Darts Tour - Latest Videos</h2>(.+?)<div class="paging-wrapper dark clearfix">',re.DOTALL).findall(html)
+    match = re.compile('<a href="(.+?)".+?<img src="(.+?)".+?<p>(.+?)</p>',re.DOTALL).findall(str(block))
+    for url, img, name in match:
+        img = 'https:'+img
+        url = 'https://www.laola1.tv'+url
+        process.Menu(name,url,13,img,img,'','')       
+
+
+def mpop():
+    html = requests.get('http://www.imdb.com/chart/tvmeter?ref_=nv_tvv_mptv_4').content
+    match = re.compile('<td class="posterColumn">.+?<img src="(.+?)".+?title=".+?" >(.+?)</a>.+?data-titleid="(.+?)">',re.DOTALL).findall(html)
+    for img, name, im in match:
+        imnew = 'http://imdb.com/title/'+im
+        getseaseps(name,imnew)
+        
+        
+def getseaseps(name,imnew):
+    html = requests.get(imnew).content
+    block = re.compile('<link rel=\'image_src\' href="(.+?)">.+?<h4 class="float-left">Years</h4><hr />(.+?)<div  >',re.DOTALL).findall(html)
+    #match = re.compile('<a href="(.+?)"',re.DOTALL).findall(str(block))
+    for img, All in block:
+        match = re.compile('<a href="(.+?)"',re.DOTALL).findall(str(block))
+        for seas in match:
+            seas = seas
+        process.Menu(name,'',100036,img,img,'','')
+
+def tv_running():
+    HTML = requests.get('http://www.returndates.com/index.php?running=1').content
+    match = re.compile('></td><td><font size=4>(.+?)</font.+?/td><td><font size=4>(.+?)</font></td><td><font size=4>(.+?)</font></td><td><font size=4>(.+?)</font></td><td><font size=4>(.+?)</font>.+?<a href="(.+?)"',re.DOTALL).findall(HTML)
+    for name,season,status,date,day,Link in match:
+        Link = 'http://www.returndates.com/'+Link
+        process.Menu(name,Link,100039,'','','','')
+        xbmcplugin.addSortMethod( handle=int( sys.argv[ 1 ] ), sortMethod=xbmcplugin.SORT_METHOD_TITLE )
+            
+def eps(name,url):
+    show_name = name
+    html = requests.get(url).content
+    match = re.compile("<tr bgcolor='.+?' class='.+?'><td>(.+?)</td><td>(.+?)</td>.+?<p>(.+?)</p>",re.DOTALL).findall(html)
+    match2 = re.compile("</td></tr><tr><td colspan=2>.+?<a href='http://www.imdb.com/title/(.+?)'",re.DOTALL).findall(html)
+    for imdb in match2:
+        imdb = imdb
+    for sesep, date, name in match:
+        sesep = sesep.replace(' ','')
+        if name == ' ':
+            name = "unknown"
+        year = date[0:4]
+        #if sesep.lower() == 's01e01':
+            #show_year = date
+        season = sesep[1:3]
+        eps = sesep[4:6]
+        process.Menu(show_name+'- Season'+season+'- Episode'+eps+'- year'+year,'',100045,'','','',show_name)
+        
+def send_to_search2(name,extra):
+    #xbmc.log('name:'+(str(extra)),xbmc.LOGNOTICE)
+    dp =  xbmcgui.DialogProgress()
+    dp.create('Checking for stream')
+    from lib import Scrape_Nan
+    name_splitter = name + '<>'
+    name_split = re.compile('(.+?)- SEASON -(.+?)- EPISODE-(.+?)-(.+?)<>').findall(str(name_splitter))
+    for title,season,episode,show_year in name_split:
+        title = title
+        season = season
+        episode = episode
+        tvdb = ''
+        Scrape_Nan.scrape_episode(title,show_year,'',season,episode,'')
+    #search.TV(Search_name)
+
+def dizi_main():
+    headers = {"user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.109 Safari/537.36"}
+    html = scraper.get('http://www.dizi720p.co/diziler').content
+    match = re.compile('<div class="item-image">.+?href="(.+?)".+?<img src="(.+?)".+?alt="(.+?)"',re.DOTALL).findall(html)
+    for url,img,name in match:
+        process.Menu(name,url,100052,img,img,'','')
+
+
+def get_dizi_eps(url):
+    headers = {"host":"www.dizi720p.co",
+                 "referer":url,
+                 "User-Agent":"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0"
+                 }
+    ep
+
+def scrape_dizi(title,season, episode):
+    xbmc.log('##############'+title+season+episode,xbmc.LOGNOTICE)
+    base_link = 'http://www.dizi720p.co/'
+    sources = []
+    
+    start_url = base_link+title.replace(' ','-')+'-'+season.replace('0','')+'-sezon-'+episode+'-bolum-izle.html'
+    html = scraper.get(start_url).content
+    block = re.compile('<ul class="dropdown-menu" role="menu">(.+?)</ul></div><div class="pull-right">',re.DOTALL).findall(html)
+    for Block in block:
+        print('12345')
+    match = re.compile('<iframe src="(.+?)"').findall(html)
+    for frame in match:
+        if not '.html' in frame:
+            #print(frame)
+            if 'watchserieshd.xyz' in frame:
+                html2 = scraper.get(frame).content
+                match2 = re.compile('file: "(.+?)",.+?label":"(.+?)"',re.DOTALL).findall(html2)
+                for url,p in match2:
+                    process.PLAY('test'+p,url,906,'','','','')
+            if '.ru' in frame:
+                if 'videoembed' in frame:
+                    process.PLAY('test',frame,906,'','','','')
+            if 'streamango' in frame:
+                html4 = scraper.get(frame).content
+                match4 = re.compile('type:"video/mp4",src:"(.+?)"').findall(html4)
+                for link3 in match4:
+                    link3 = 'https:'+link3
+                    process.PLAY('test streamango',link3,906,'','','','')
+        match_multi = re.compile('<a href="(.+?)">(.+?)</a>').findall(str(Block))
+        for page,name in match_multi:
+            if not 'http' in name:
+                if '.ru' in name:
+                    html3 = scraper.get(page).content
+                    match = re.compile('<iframe.+?src="(.+?)"').findall(html3)
+                    for frame in match:
+                        if not '.html' in frame:
+                            if name.lower() in frame:
+                                
+                                process.PLAY('testok.ru','https:'+frame,906,'','','','')
+                elif 'Mango' in name:
+                    html3 = scraper.get(page).content
+                    match = re.compile('<iframe.+?src="(.+?)"').findall(html3)
+                    for frame in match:
+                        html4 = scraper.get(frame).content
+                        match4 = re.compile('type:"video/mp4",src:"(.+?)"').findall(html4)
+                        for link3 in match4:
+                            link3 = 'https:'+link3
+                            process.PLAY('test streamango',link3,906,'','','','')
+
+                elif 'Raptu' in name:
+                    html3 = scraper.get(page).content
+                    match = re.compile('<iframe.+?src="(.+?)"').findall(html3)
+                    for frame in match:
+                        html4 = scraper.get(frame).content
+                        match2 = re.compile('"sources"(.+?)"logo"').findall(html4)
+                        for block in match2:
+                            match3 = re.compile('"https:(.+?)"').findall(str(block))
+                            for link3 in match3:
+                                link3 = 'https:'+link3.replace('\/\/','//').replace('\/','/')
+                                process.PLAY('test Raptu',link3,906,'','','','')
+
+def table():
+    results = []
+    sp1 = '                                         '
+    sp2 = '        '
+    process.Menu('[COLORwhite][B]'+sp1+'pl'+sp2+'w'+sp2+'d'+sp2+'l'+sp2+'f'+sp2+'a'+sp2+'pts[/B][/COLOR]','','','','','','')
+    html = requests.get('http://livefootball.com/football/england/premier-league/').content
+    match = re.compile('</li><li><a href="/football/england/premier-league/league-table/away/".+?title="Rank">([^<]*)</td>.+?title="Played">([^<]*)</td>.+?title="Wins">([^<]*)</td>.+?title="Draws">([^<]*)</td>.+?title="Lost">([^<]*)</td>.+?title="Goals For">([^<]*)</td>.+?title="Goals Against">([^<]*)</td>.+?title="Goals Difference">([^<]*)</td>.+?title="Points">([^<]*)</td>(.+?)</table></div>',re.DOTALL).findall(html)            
+    #match2 = re.compile('</li><li><a href="/football/england/premier-league/league-table/away/".+?<td class="ltn">([^<]*)</td><td class="ltg">([^<]*)</td><td class="ltw">([^<]*)</td><td class="ltd">([^<]*)</td><td class="ltl">([^<]*)</td><td class="ltgf">([^<]*)</td><td class="ltga">([^<]*)</td><td class="ltgd">([^<]*)</td><td class="ltp">([^<]*)</td></tr><tr><td class="ltid">([^<]*)</td>',re.DOTALL).findall(str(rest))
+    for r,p,w,d,l,f,a,df,pts,rest in match:
+        r = "POS"
+        space = "       "
+        rest = rest
+        #process.Menu(sp1+p+sp2+w+sp2+d+sp2+l+sp2+f+sp2+a+sp2+df+sp2+pts,'','','','','','')
+        match2 = re.compile('<td class="ltid">([^<]*)</td><td class="ltn">([^<]*)</td><td class="ltg">([^<]*)</td><td class="ltw">([^<]*)</td><td class="ltd">([^<]*)</td><td class="ltl">([^<]*)</td><td class="ltgf">([^<]*)</td><td class="ltga">([^<]*)</td><td class="ltgd">([^<]*)</td><td class="ltp">([^<]*)</td></tr>',re.DOTALL).findall(str(rest))
+        for iD,team,pl,w,d,l,f,ga,gd,p, in match2:
+            pos = iD+team
+            team = team.replace('Brighton &amp; Hove Albion','Brighton').replace('AFC Bournemouth','Bournemouth')
+            team = team.replace('West Bromwich Albion','West Brom').replace('Tottenham Hotspur','Spurs').replace('Manchester City','Man City').replace('Manchester United','Man United')
+            team = team.replace('West Ham United','West Ham')
+            pl_sp = gap(pl)
+            w_sp = gap(w)
+            d_sp = gap(d)
+            l_sp = gap(l)
+            f_sp = gap(f)
+            a_sp = gap(ga)
+            thing = Cleaner(team.upper())
+            image = thing[1]
+            sp_no = thing[0]
+            process.Menu(team+sp_no+pl+pl_sp+w+w_sp+d+d_sp+l+l_sp+f+f_sp+ga+a_sp+' '+p,'','',image,'','','')
+
+def Cleaner(team):
+    image = ICON
+    gap = ' '
+    if '<a href' in team:
+        pass
+    else:
+        if 'ARSENAL' in team:
+            image = 'http://s018.radikal.ru/i519/1210/74/a0965770c1bd.png'
+            gap = '                            '
+        elif 'BRIGHTON' in team:
+            image = 'http://www.northstandchat.com/attachment.php?attachmentid=72847&d=1457183704'
+            gap = '                          '
+        elif 'BOURNEMOUTH' in team:
+            image = 'http://soccerlogo.net/uploads/posts/2015-02/1424200737_fc-afc-bournemouth.png'
+            gap = '                '
+        elif 'BURNLEY' in team:
+            image = 'http://s019.radikal.ru/i627/1212/a9/cc25ae83d515.png'
+            gap = '                            '
+        elif 'CHELSEA' in team:
+            image = 'http://soccerlogo.net/uploads/posts/2014-09/1410462243_fc-chelsea.png'
+            gap = '                            '
+        elif 'CRYSTAL' in team:
+            image = 'http://jonwant.com/wp-content/uploads/2015/04/crystalpalace.png'
+            gap = '                  '
+        elif 'EVERTON' in team:
+            image = 'http://megaicons.net/static/img/icons_sizes/257/622/256/everton-fc-icon.png'
+            gap = '                             '
+        elif 'HUDDERSFIELD' in team:
+            image = 'http://s019.radikal.ru/i636/1301/0c/438a3af0c463.png'
+            gap = '         '
+        elif 'LEICE' in team:
+            image = 'http://soccerlogo.net/uploads/posts/2014-09/1410463960_fc-leicester-city.png'
+            gap = '                   '
+        elif 'LIVERPOOL' in team:
+            image = 'http://i641.photobucket.com/albums/uu140/marveljoe_bucket/Liverpool-FC-256x256.png'
+            gap = '                          '
+        elif 'MAN CITY' in team:
+            image = 'http://icons.iconseeker.com/png/fullsize/british-football-club/manchester-city.png'
+            gap = '                            '
+        elif 'MAN UNITED' in team:
+            image = 'https://hdlogo.files.wordpress.com/2013/11/manchester-united.png'
+            gap = '                      '
+        elif 'BROUGH' in team:
+            image = 'http://s25.postimg.org/g611tr767/Badge_Middlesbrough256x256.png'
+            gap = '            '
+        elif 'SOUTHAMPTON' in team:
+            image = 'http://s019.radikal.ru/i639/1210/48/3326d080e375.png'
+            gap = '                  '
+        elif 'STOKE CITY' in team:
+            image = 'http://s55.radikal.ru/i147/1210/96/e3f610ab745c.png'
+            gap = '                         '
+        elif 'SUNDERLAND' in team:
+            image = 'http://futhead.cursecdn.com/static/img/16/clubs/106.png'
+            gap = '                   '
+        elif 'SWANSEA' in team:
+            image = 'http://soccerlogo.net/uploads/posts/2014-09/1410462864_fc-swansea_city.png'
+            gap = '                   '
+        elif 'SPURS' in team:
+            image = 'http://s14.radikal.ru/i187/1210/d2/243ffe6f2f90.png'
+            gap = '                                '
+        elif 'WATFORD' in team:
+            image = 'http://s25.postimg.org/bclw2n027/Badge_Watford256x256.png'
+            gap = '                            '
+        elif 'BROM' in team:
+            image = 'http://s018.radikal.ru/i516/1210/6c/d0990201b8d2.png'
+            gap = '                      '
+        elif 'WEST HAM' in team:
+            image = 'http://s018.radikal.ru/i502/1210/60/c38b78fbbdb1.png'
+            gap = '                       '
+        elif 'NEWCASTLE' in team:
+            image = 'https://b.fssta.com/uploads/content/dam/fsdigital/fscom/global/dev/static_resources/soccer/teams/english-premier-league/retina/6151.vresize.200.200.medium.0.png'
+            gap = '            '
+        return gap,image
+
+def gap(space):
+    spacer = '        '
+    if int(space)>=100:
+        spacer = '     '
+    elif int(space)>=10:
+        spacer = '      '
+    return spacer
+    
+def News(title,url):
+    if "News" in title:
+        News = requests.get(url).text
+        match = re.compile('(.+?)',re.DOTALL).findall(str(News))
+        for stuff in match:
+            TextBoxes('[COLOR navy]OffShore[/COLOR] [COLOR blue]IPTV[/COLOR]',stuff)
+        
+def livetest():
+    domain = 'http://www.footballstreamings.com/channels.html'
+    html = requests.get(domain).text
+    #match = re.compile('<td width="20%" align=.+?<strong>(.+?)</strong></span></td>',re.DOTALL).findall(html)
+    #block = re.compile('<div id="accordion1">(.+?)p>Please give your feedback for Sports Channels at <a',re.DOTALL).findall(html)
+    mach = re.compile('<td width="20%" align=.+?22px;"><strong>(.+?)</strong></span></td>.+?<td width="48%">LINK</td>(.+?)<table width="100%" border="0">',re.DOTALL).findall(html)
+    for chann, rest in mach:
+        Links = re.compile('<td><strong>(.+?)</strong></td>.+?<td><a href="(.+?)"',re.DOTALL).findall(str(rest))
+        for watch, Plink in Links:
+            if 'filmon' in Plink:
+                plinking = 'plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url=' +Plink
+                process.Play('these links may die'+' '+chann+'\n'+watch,plinking,906,'',FANART,'','')
+            elif 'cine' or 'v2' or 'cric' in Plink:
+                plinking = 'plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url=' +Plink
+                process.Play(chann+'\n'+watch,plinking,906,'',FANART,'','')
+        #chann+'\n'+watch
 def IMDB_list():
 	process.Menu('TV Shows','',300,'','','','')
 	process.Menu('Movies','',200,'','','','')
@@ -146,8 +438,8 @@ def IMDB_list():
 def twenty47():
 	from lib.pyramid import pyramid
 	process.Menu('quantum 24/7 Cartoons','',812,ORIGIN_ICON,FANART,'','')
-	pyramid.not_so_anon('Fido 24/7','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@@KE@@AV@-@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@PC@@KE@@AV@@CE@@NS@@OO@@SE@@OF@@OF@@ON@@OP@@KY@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
-	process.Menu('Pyramid 24/7','http://tombraiderbuilds.co.uk/addon/tvseries/247shows/247shows.txt',1101,RAIDER_ICON,'','','')
+	process.Menu('Fido 24/7','',100060,FIDO_ICON,FANART,'','')
+	#process.Menu('Pyramid 24/7','http://tombraiderbuilds.co.uk/addon/tvseries/247shows/247shows.txt',1101,RAIDER_ICON,'','','')
 	process.Menu('Supremacy 24/7','http://stephen-builds.uk/supremacy/24-7/24-7.txt',1101,SUPREM_ICON,'','','')
 	#process.Random_play('Raiz TV - Play 10 Random Cartoons',1154,url='http://raiztv.co.uk/RaysRavers/list2/raiztv/kids/kidsrandom.txt',image=RAY_ICON,isFolder=False)
 	
@@ -260,6 +552,8 @@ def Music_Men():
 def classic_list():
 		if ADDON.getSetting('Quantum')=='true':
 			process.Menu('Quantum','',4,ORIGIN_ICON,FANART,'','')
+		if ADDON.getSetting('apprentice')=='true':
+                        process.Menu('Apprentice','',100010,app_icon,FANART,'','')
 		if ADDON.getSetting('Pandoras_Box')=='true':
 			process.Menu('Pandora\'s Box','',900,PANDORA_ICON,FANART,'','')
 		if ADDON.getSetting('Pyramid')=='true':
@@ -279,7 +573,7 @@ def classic_list():
 		if ADDON.getSetting('Just_For_Him')=='true':
 			process.Menu('Just For Him','',1400,NINJA_ICON,FANART,'','')
 		if ADDON.getSetting('BAMF')=='true':
-			process.Menu('BAMF IPTV','',1132,BAMF_ICON,FANART,'','')
+			process.Menu('Back In Time','',1132,BAMF_ICON,FANART,'','')
 		if ADDON.getSetting('Quicksilver')=='true':
 			process.Menu('Quicksilver Music','',1133,QUICK_ICON,'','','')
 		if ADDON.getSetting('Rays_Ravers')=='true':
@@ -381,16 +675,50 @@ def TV_Calender_Prog(extra):
 		process.Menu(prog+' - Season '+ep.replace('x',' Episode '),'',8,'','','',prog)
 
 def send_to_search(name,extra):
-	if 'COLOR' in name:
-		name = re.compile('- (.+?)>').findall(str(name)+'>')
-		for name in name:
-			name = name
-	dp =  xbmcgui.DialogProgress()
-	dp.create('Checking for stream')
-	from lib import search
-	search.TV(name)
+    if 'COLOR' in name:
+        name = re.compile('- (.+?)>').findall(str(name)+'>')
+        for name in name:
+            name = name
+    dp =  xbmcgui.DialogProgress()
+    dp.create('Checking for stream')
+    from lib import search
+    search.TV(name)
 
+#process.Menu(show_name+' - Season'+season+' Episode'+eps+' - '+year+' - '+imdb,'',100045,'','','',show_name)
+'''
+def send_to_search2(name,extra):
+    dp =  xbmcgui.DialogProgress()
+    dp.create('Checking for stream')
+    from lib import search, Scrape_Nan
+    Search_name = extra.lower().replace(' ','')
+    name_splitter = name + '<>'
+    name_split = re.compile('(.+?)- Season(.+?)- Episode(.+?)<>').findall(str(name_splitter))
+    for name,season,episode,year,imdb in name_split:
+        title = name.lower()
+        tvdb = ''
+        show_year = year
+        Scrape_Nan.scrape_episode(title,'','',season,episode,'')
+    #search.TV(Search_name)
+'''
+def send_to_movie_search(name,extra):
+    from lib import Scrape_Nan
+    if '(' in name:
+        name_minus_year = re.compile('(.+?) \(').findall(str(name))
+        for item in name:
+            name = item
+    dp =  xbmcgui.DialogProgress()
+    dp.create('Checking for stream')
+    year = extra.replace('/)','').replace('/(','')
+    Scrape_Nan.scrape_movie(name,year)
 
+def split_for_search(extra):
+    from lib import Scrape_Nan
+    splitter = re.compile('<(.+?)<(.+?)<').findall(str(extra))
+    for name , year in splitter:
+        year = year
+        name = name
+    
+        Scrape_Nan;Scrape_Nan.scrape_movie(name,year,'')
 
 
 
@@ -422,6 +750,10 @@ def get_params():
         return param
 
 params=get_params()
+title=None
+show_year=None
+season=None
+episode=None
 url=None
 name=None
 iconimage=None
@@ -433,6 +765,22 @@ fav_mode=None
 regexs=None
 playlist=None
 
+try:
+    title=urllib.unquote_plus(params["title"])
+except:
+    pass
+try:
+    show_year=urllib.unquote_plus(params["show_year"])
+except:
+    pass
+try:
+    season=urllib.unquote_plus(params["season"])
+except:
+    pass
+try:
+    episode=urllib.unquote_plus(params["episode"])
+except:
+    pass
 try:
     regexs=params["regexs"]
 except:
@@ -858,6 +1206,43 @@ elif mode == 10000: from lib import youtube_regex;youtube_regex.Youtube_Grab_Pla
 elif mode == 10001: from lib import youtube_regex;youtube_regex.Youtube_Playlist_Grab(url)
 elif mode == 10002: from lib import youtube_regex;youtube_regex.Youtube_Playlist_Grab_Duration(url)
 elif mode == 10003: from lib import yt;yt.PlayVideo(url)
+elif mode == 100010: from lib import apprentice;apprentice.dud_mov()
+elif mode == 100011: from lib import apprentice;apprentice.recent_dud(url)
+elif mode == 100012: from lib import apprentice;apprentice.dud_play(name,url)
+elif mode == 100013: from lib import apprentice;apprentice.new_rel(url)
+elif mode == 9110001: from lib import apprentice;apprentice.show_main(url)
+elif mode == 9110002: from lib import apprentice;apprentice.get_eps(url,name,iconimage) 
+elif mode == 9110003: send_to_search2(name,extra)  
+elif mode == 9110005: from lib import apprentice;apprentice.movie_search(description,url)  
+elif mode == 9110004: from lib import apprentice;apprentice.nantvsearch()
+elif mode == 9110006: from lib import apprentice;apprentice.app_show_men()
+elif mode == 9110007: from lib import apprentice;apprentice.mov_main(url,extra)
+elif mode == 9110008: from lib import apprentice;apprentice.app_mov_men()
+elif mode == 100035: livetest()
+elif mode == 100036: mpop()
+elif mode == 100037: dmain()
+elif mode == 100038: tv_running()
+elif mode == 100039: eps(name,url)
+elif mode == 100060: from lib import Big_Kids;Big_Kids.ac247()
+elif mode == 100041: process.Big_resolve2(name,url)
+elif mode == 100042: from lib.nan import onlinemovies;onlinemovies.scrape_episode(title, show_year, season, episode)
+elif mode == 100043: from lib.nan import dizi720;dizi720.scrape_episode(title, show_year, season, episode)
+elif mode == 100044: from lib import onlinemovies;onlinemovies.scrape_episode(title, show_year, season, episode)
+elif mode == 100045: send_to_search2(name,extra)
+elif mode == 100046: split_for_search(extra)
+elif mode == 100050: table()
+elif mode == 100051: dizi_main()
+elif mode == 100060: from lib import Big_Kids;Big_Kids.ac247()
+elif mode == 100061: from lib import Big_Kids;Big_Kids.actvshows()
+elif mode == 100062: from lib import Big_Kids;Big_Kids.actvmovies()
+elif mode == 100063: from lib import Big_Kids;Big_Kids.actvcable()
+elif mode == 100064: from lib import Big_Kids;Big_Kids.actvrand()
+elif mode == 100065: from lib import Big_Kids;Big_Kids.arcontv()
+elif mode == 100070: from lib import Movies;Movies.scrape_movie(url)
+elif mode == 100071: from lib import Movies;Movies.movie_genre()
+elif mode == 100072: from lib import Movies;Movies.scrape_movie_genre(url,name)
+elif mode == 100073: from lib import Movies;Movies.scrape_year()
+elif mode == 100074: from lib import Movies;Movies.scrape_movie_year(url,name)
 
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

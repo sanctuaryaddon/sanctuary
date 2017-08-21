@@ -88,12 +88,11 @@ def IMDB_Get_Episode_info(url,title):
 			pass
 		
 def SPLIT(extra):
-	xbmc.log('#######'+extra)
+	#xbmc.log('#######'+extra)
 	finish = re.compile('SPLITTER>(.+?)>(.+?)>(.+?)>(.+?)>(.+?)>').findall(str(extra))
 	for title,show_year,ep_year,season,episode in finish:
-		from search import TV
-		TV(title + ' - Season '+season+' Episode '+episode)
-
+		from lib import Scrape_Nan
+		Scrape_Nan.scrape_episode(title,show_year,ep_year,season,episode,'')
 def Search_TV():
 	Search_title = xbmcgui.Dialog().input('Search', type=xbmcgui.INPUT_ALPHANUM)
 	url = 'http://www.imdb.com/find?ref_=nv_sr_fn&q='+Search_title.replace(' ','+')+'&s=all'

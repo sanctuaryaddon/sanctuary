@@ -2,7 +2,8 @@
 
 
 
-import re, xbmcplugin, xbmcgui, process, base64, sys, urllib, comedy, yt, youtube_regex
+import re, xbmcplugin, xbmcgui, process, base64, sys, urllib, comedy, yt, youtube_regex, requests
+from BeautifulSoup import BeautifulSoup as bs
 
 addon_handle = int(sys.argv[1])
 Dialog = xbmcgui.Dialog()
@@ -14,9 +15,9 @@ source_file2 = Base_appren + 'source_file2.php'
 #1000
 def apprentice_Main():
     
-    process.Menu('[COLOR red]Suggested Movies[/COLOR]','',1301,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
-    process.Menu('[COLOR red]Suggested Tv Shows[/COLOR]','',1302,Base_appren + 'tv.png','Base_appren + tvback.png','','')
-    process.Menu('[COLOR skyblue]Movies[/COLOR]','',1304,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
+    process.Menu('[COLOR red] Movies[/COLOR]','',1301,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
+    #process.Menu('[COLOR red]Suggested Tv Shows[/COLOR]','',1302,Base_appren + 'tv.png','Base_appren + tvback.png','','')
+    #process.Menu('[COLOR skyblue]Movies[/COLOR]','',1304,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
     process.Menu('[COLOR skyblue]Tv Shows[/COLOR]','',1306,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
     process.Menu('[COLOR yellow]abracadabra[/COLOR]','',1307,Base_appren + 'abra.png',Base_appren + 'abra.jpg','','')
 	
@@ -25,6 +26,180 @@ def apprentice_Main():
     xbmcplugin.setContent(addon_handle, 'movies')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))		
 #1001
+
+def dud_mov():
+    process.Menu('[COLOR red] Movies[/COLOR]','',9110008,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
+    process.Menu('[COLOR red]Tv Shows[/COLOR]','',9110006  ,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
+    #process.Menu('[COLOR skyblue]Movies At Random[/COLOR]','',1304,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
+    #process.Menu('[COLOR skyblue]Tv Shows[/COLOR]','',1306,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
+    #process.Menu('[COLOR yellow]abracadabra[/COLOR]','',1307,Base_appren + 'abra.png',Base_appren + 'abra.jpg','','')
+def app_show_men():
+      process.Menu('[COLOR red]Tv Show Search[/COLOR]','',9110004,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
+      process.Menu('[COLOR blue]Tv Show List[/COLOR]','http://www.tvmaze.com/shows',9110001,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
+      process.Menu('Latest Episodes','http://www.tvmaze.com/calendar',6,'','','','')
+      process.Menu('Genres','',303,'','','','')
+      #process.Menu('[COLOR red]Tv Shows[/COLOR]','',100013  ,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
+      #process.Menu('[COLOR red]Tv Shows[/COLOR]','',100013  ,Base_appren + 'tv.png',Base_appren + 'tvback.png','','')
+def app_mov_men():
+    base = 'https://www.themoviedb.org'
+    #process.Menu('[COLOR red] Movies[/COLOR]','',100011,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
+    process.Menu('[COLOR red] Most Popular[/COLOR]',base+'/movie?language=en',9110007,Base_appren + 'mov.png',Base_appren + 'movback.png','','one')
+    process.Menu('[COLOR red] Top Rated[/COLOR]',base+'/movie/top-rated?language=en',9110007,Base_appren + 'mov.png',Base_appren + 'movback.png','','two')
+    process.Menu('[COLOR red] Upcoming[/COLOR]',base+'/movie/upcoming?language=en',9110007,Base_appren + 'mov.png',Base_appren + 'movback.png','','')
+    process.Menu('[COLOR red] Movies[/COLOR]',base+'/movie/now-playing?language=en',9110007,Base_appren + 'mov.png',Base_appren + 'movback.png','','two')
+
+
+def mov_main(url,extra):
+    base = 'https://www.themoviedb.org'
+    html = requests.get(url).content
+    #print html
+    html2 = bs(html)
+    anch = html2.findAll('div', attrs={'class': "item poster card"})
+    for anc in anch:
+        imgs = anc.findAll('img', attrs={'class': "poster lazyload fade"})
+        for img in imgs:
+            if img.has_key('data-src'):
+                image = img['data-src']
+        conts = anc.findAll('div', attrs={'class': "info"})
+        for cont in conts:
+            gens = cont.findAll('p', attrs={'class': "meta flex"})
+            for gen in gens:
+                gen2 = gen.findAll('span', attrs={'class': "genres"})
+                for genr in gen2:
+                    genre = genr.text
+                    #print genre
+                years = gen.findAll('span', attrs={'class': "release_date"})
+                for year in years:
+                    release = year.text
+                    #print release
+            titnam = cont.findAll('p', attrs={'class': "view_more"})
+            for info in titnam:
+
+                links = info.findAll('a')
+                for link in links:
+                    if link.has_key('href'):
+                        url = base+link['href']
+                        if link.has_key('title'):
+                            name = link['title']
+                        #   print name
+                        #   print image
+                        #   print url
+                        extra1 = '<'+name+'<'+release+'<'
+                        des = get_desc(url)
+                        process.Menu(name,'',100046,image,Base_appren + 'tv.png','Genre: '+genre+'\n'+'Release Date: '+release+'\n'+'Description: \n'+des,extra1)
+
+    pages = html2.findAll('p', attrs={'class': "right pagination"})
+    for page in pages:
+        page = page.findAll('a')
+        for Next in page:
+            if Next.has_key('href'):
+                Nxt = base+Next['href']
+                process.Menu('NEXT',Nxt,9110007,'',Base_appren + 'mov.png','','')
+
+def split_for_search(extra):
+    splitter = re.compile('<(.+?)<(.+?)<').findall(str(extra))
+    for name , year in splitter:
+        year = year
+        name = name
+    
+        Scrape_Nan;Scrape_Nan.scrape_movie(name,year,'')
+
+def get_desc(url):
+    html = requests.get(url).content
+    #print html
+    html2 = bs(html)
+    anch = html2.findAll('meta', attrs={'name': "description"})
+    for anc in anch:
+        if anc.has_key('content'):
+            desc = anc['content']
+            des = desc.encode('ascii', 'ignore')
+        return des
+
+
+
+
+
+def nantvsearch():
+    Search_Name = Dialog.input('Search Dans Scrapes', type=xbmcgui.INPUT_ALPHANUM)
+    Search_Clean_Name = 'http://www.tvmaze.com/search?q='+(Search_Name).replace(' ','+')
+    Search_Title = Search_Clean_Name.lower()
+    HTML = process.OPEN_URL(Search_Title)
+    match = re.compile('<a href="([^"]*)"><img src="([^"]*)" alt="([^"]*)"></a>',re.DOTALL).findall(HTML)
+    for url, img, name in match:
+        url2 = 'http://www.tvmaze.com'+url.replace('"','')
+        html2 = requests.get(url2).content
+        match = re.compile('<article>.+?<p>(.+?)</p>',re.DOTALL).findall(html2)
+        for desc in match:
+            if not '<div>' in desc:
+                des = desc.replace('<b>','').replace('</b>','').replace('<i>','').replace('</i>','')
+            img = 'http:'+img
+            name = name.replace('&#039;','')
+            if name == '':
+                get = re.compile('/shows/.+?/([^"]*)"').findall(str(url))
+                for name in get:
+                    name = name.replace('-',' ')
+        process.Menu(name,url2,9110002,img,Base_appren + 'tv.png',des,'')
+###################################tv shows dan###################################
+def show_main(url):
+    process.Menu('[COLORsteelblue]SEARCH[/COLOR]','',9110004,'',Base_appren + 'tv.png','','')
+    html = requests.get(url).content
+    match = re.compile('<div class="img">.+?href="([^>]*)><img src="([^"]*)" alt="([^"]*)"></a>',re.DOTALL).findall(html)
+    Next = re.compile('<li class="next"><a href="(.+?)"').findall(html)
+    for url, img, name in match:
+        url2 = 'http://www.tvmaze.com'+url.replace('"','')
+        html2 = requests.get(url2).content
+        match = re.compile('<article>.+?<p>(.+?)</p>',re.DOTALL).findall(html2)
+        for desc in match:
+            if not '<div>' in desc:
+                des = desc.replace('<b>','').replace('</b>','').replace('<i>','').replace('</i>','')
+            img = 'http:'+img
+            name = name.replace('&#039;','')
+            if name == '':
+                get = re.compile('/shows/.+?/([^"]*)"').findall(str(url))
+                for name in get:
+                    name = name.replace('-',' ')
+        process.Menu(name,url2,9110002,img,Base_appren + 'tv.png',des,'')
+
+    for nxt in Next:
+        url = 'http://www.tvmaze.com'+nxt
+        process.Menu('NEXT',url,9110001,img,Base_appren + 'tv.png','','')
+
+def get_eps(url,name,iconimage):
+    title = name
+    img = iconimage
+    html = requests.get(url+'/episodes').content
+    html2 = requests.get(url).content
+    block = re.compile("<h2 data-magellan-destination='(.+?)'.+?<tbody>(.+?)</tbody>",re.DOTALL).findall(html)
+    match = re.compile('<span id="year">\((.+?)-',re.DOTALL).findall(html2)
+    for show_year in match:
+        show_year = show_year.replace(' ','')   
+    for seas , rest in block:
+        if not 'special' in seas.lower():
+            seas = seas.replace('S','').replace('s','')
+        eps = re.compile('<tr data-key=".+?"><td>(.+?)</td><td>.+?,(.+?)</td>.+?href=".+?">(.+?)</a>',re.DOTALL).findall(str(rest))
+        for ep, ep_year, ep_name in eps:
+            if not 'special' in ep.lower():
+                process.Menu(title+' - SEASON -'+seas+'- EPISODE-'+ep+'-'+show_year,'',9110003,img,Base_appren + 'tv.png','',title)
+                
+                
+                
+def send_to_search2(name,extra):
+    #xbmc.log('name:'+(str(extra)),xbmc.LOGNOTICE)
+    dp =  xbmcgui.DialogProgress()
+    dp.create('Checking for stream')
+    from lib import Scrape_Nan
+    name_splitter = name + '<>'
+    name_split = re.compile('(.+?)- SEASON -(.+?)- EPISODE-(.+?)-(.+?)<>').findall(str(name_splitter))
+    for title,season,episode,show_year in name_split:
+        title = title
+        season = season
+        episode = episode
+        tvdb = ''
+        Scrape_Nan.scrape_episode(title,show_year,'',season,episode,'')
+
+
+
+'''        
 def Magic_Menu():
     OPEN = process.OPEN_URL(Base_appren +Decode('bWFnaWMucGhw'))
     Regex = re.compile('<a href="(.+?)" target="_blank"><img src="(.+?)" style="max-width:200px;" /><description = "(.+?)" /><background = "(.+?)" </background></a><br><b>(.+?)</b>').findall(OPEN)
@@ -160,4 +335,4 @@ def Clean_name(name,url3):
     clean_name = name15
     search_name = name25
     process.Play(clean_name,url3,906,'','','','')
-
+'''

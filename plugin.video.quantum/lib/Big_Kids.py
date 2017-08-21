@@ -1,4 +1,5 @@
-import urllib2,re,os,xbmc,xbmcplugin,xbmcaddon,xbmcgui,urlparse,urllib,sys,base64, process, random
+import urllib2,re,os,xbmc,xbmcplugin,xbmcaddon,xbmcgui,urlparse,urllib,sys,base64, process, random, requests
+from BeautifulSoup import BeautifulSoup
 
 addon_handle = int(sys.argv[1])
 Decode = base64.decodestring
@@ -7,6 +8,110 @@ ICON = ADDON_PATH + 'icon.png'
 FANART = ADDON_PATH + 'fanart.jpg'
 BASE = Decode('aHR0cDovL3d3dy5hbmltZXRvb24ub3JnL2NhcnRvb24=')
 Dialog = xbmcgui.Dialog()
+
+base_icons = 'http://herovision.x10host.com/freeview/'
+FIDO_ICON = base_icons + 'fido.png'
+
+def ac247():
+    process.Menu('Featured 24/7','',100065,FIDO_ICON,FANART,'','')
+    process.Menu('24/7 Tv Shows','',100061,FIDO_ICON,FANART,'','')
+    process.Menu('24/7 Movies','',100062,FIDO_ICON,FANART,'','')
+    process.Menu('24/7 Cable','',100064,FIDO_ICON,FANART,'','')
+    process.Menu('24/7 Random Stream','',100064,FIDO_ICON,FANART,'','')
+
+def actvshows():
+    url = 'http://arconaitv.me/'
+    index = 'index.php#shows'
+    html = BeautifulSoup(requests.get(url+index).content)
+    conts = html.findAll('div', attrs= {'class':'stream-nav shows'})
+    for cont in conts:
+        links = cont.findAll('div', attrs= {'class':'stream-initial'})
+        for link in links:
+            inis = link.text
+        links2 = cont.findAll('a')
+        for link in links2:
+            if link.has_key('href'):
+                href = url+link['href']
+            if link.has_key('title'):
+                name = link['title']
+            html2 = BeautifulSoup(requests.get(href).content)
+            m3u = html2.findAll('source')
+            for source in m3u:
+                src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+                process.Play(name, src ,906,FIDO_ICON,FANART,'','')
+
+
+def actvmovies():
+    url = 'http://arconaitv.me/'
+    index = 'index.php#movies'
+    html = BeautifulSoup(requests.get(url+index).content)
+    conts = html.findAll('div', attrs= {'class':'stream-nav movies'})
+    for cont in conts:
+        links = cont.findAll('div', attrs= {'class':'stream-initial'})
+        for link in links:
+            inis = link.text
+        links2 = cont.findAll('a')
+        for link in links2:
+            if link.has_key('href'):
+                href = url+link['href']
+            if link.has_key('title'):
+                name = link['title']
+            html2 = BeautifulSoup(requests.get(href).content)
+            m3u = html2.findAll('source')
+            for source in m3u:
+                src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+                process.Play(name, src ,906,FIDO_ICON,FANART,'','')
+            
+
+def actvcable():
+    url = 'http://arconaitv.me/'
+    index = 'index.php#cable'
+    html = BeautifulSoup(requests.get(url+index).content)
+    conts = html.findAll('div', attrs= {'class':'stream-nav cable'})
+    for cont in conts:
+        links = cont.findAll('div', attrs= {'class':'stream-initial'})
+        for link in links:
+            inis = link.text
+        links2 = cont.findAll('a')
+        for link in links2:
+            if link.has_key('href'):
+                href = url+link['href']
+            if link.has_key('title'):
+                name = link['title']
+            html2 = BeautifulSoup(requests.get(href).content)
+            m3u = html2.findAll('source')
+            for source in m3u:
+                src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+                process.Play(name, src ,906,FIDO_ICON,FANART,'','')
+
+def actvrand():
+    html2 = BeautifulSoup(requests.get('http://arconaitv.me/stream.php?id=random').content)
+    m3u = html2.findAll('source')
+    for source in m3u:
+        src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+        process.Play('Random Pick', src ,906,FIDO_ICON,FANART,'','')
+
+def arcontv():
+    url = 'http://arconaitv.me/'
+    index = 'index.php#shows'
+
+    html = BeautifulSoup(requests.get(url+index).content)
+    conts = html.findAll('div', attrs= {'class':'box-content'})
+    for cont in conts:
+        links = cont.findAll('a')
+        for link in links:
+            if link.has_key('href'):
+                href = url+link['href']
+            if link.has_key('title'):
+                name = link['title']
+            pics = link.findAll('img')
+            for pic in pics:
+                img = url+pic['src']
+                html2 = BeautifulSoup(requests.get(href).content)
+                m3u = html2.findAll('source')
+                for source in m3u:
+                    src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+                    process.Play(name, src ,906,img,img,'','')
 
 def Big_Kids_Main_Menu():
 

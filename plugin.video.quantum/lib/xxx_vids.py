@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import urllib2, urllib, xbmcgui, xbmcplugin, xbmcaddon, xbmc, re, sys, os, process
 import clean_name
-ADDON_PATH = xbmc.translatePath('special://home/addons/plugin.video.quantum,')
+ADDON_PATH = xbmc.translatePath('special://home/addons/plugin.video.quantum')
 ICON = ADDON_PATH + '/icon.png'
 FANART = 'http://www.artsfon.com/pic/201605/1920x1080/artsfon.com-84741.jpg'
 Dialog = xbmcgui.Dialog()
@@ -105,9 +105,10 @@ def youjizz():
 def youjizz_videos(url):
 	next_list = []
 	html = process.OPEN_URL(url)
-	match = re.compile('<a class="frame".+?href=\'(.+?)\'.+?<img class="lazy".+?data-original="(.+?)".+?<span id="title1">(.+?)</span>.+?<span class=\'thumbtime\'><spa.+?>(.+?)</span',re.DOTALL).findall(html)
+	match = re.compile('<a class="frame".+?href="(.+?)".+?<img.+?data-original="(.+?)".+?<a href=.+?>(.+?)</a>.+?"time">(.+?)</span>',re.DOTALL).findall(html)
 	for url,img,name,length in match:
 		url = 'http://youjizz.com'+url
+		img = 'http:'+img
 		name = length+' - '+name
 		name = clean_name.clean_name(name)
 		process.PLAY(name,url,769,img,FANART,'','')
@@ -118,13 +119,25 @@ def youjizz_videos(url):
 			next_list.append('Next')
 	
 def youjizz_playlink(url):
+	sources=[]
+	xbmc.log(url,xbmc.LOGNOTICE)
 	html = process.OPEN_URL(url)
-	match = re.compile('<source src="(.+?)"').findall(html)
-	for playlink in match:
-		if not 'http' in playlink:
-			playlink = 'http:'+playlink
-		process.Resolve(playlink)
-	
+	match = re.compile('"quality":"(.+?)","filename":"(.+?)"').findall(html)
+	for quality,playlink in match:
+		playlink = 'http:'+playlink.replace('\\','')
+		if 'm3u8' in playlink:
+			quality = 'm3u8 | '+quality
+		elif 'mp4' in playlink:
+			quality = 'mp4 | '+quality 
+		sources.insert(0,{'quality': quality+'p', 'playlink': playlink})
+		if len(sources) == len(match):
+			choice = Dialog.select('Select Playlink',[link["quality"] for link in sources])
+			if choice != -1:
+				playlink = sources[choice]['playlink']
+				isFolder=False
+				xbmc.Player().play(playlink)
+
+		
 def youjizz_tags(url):
 	for letter in letters:
 		process.Menu(letter,url,770,'https://pbs.twimg.com/profile_images/3332003625/23c080fbec17cfb45ca3fd40ec06afe1.png',FANART,'','')
@@ -442,13 +455,14 @@ def tube8_playlink(url):
 	match = re.compile('"quality_(.+?)":(.+?),').findall(html)
 	for quality,playlink in match:
 		playlink = playlink.replace('\\','').replace('"','')
-		sources.append({'quality': quality, 'playlink': playlink})
-		if len(sources) == len(match):
-			choice = Dialog.select('Select Playlink',[link["quality"] for link in sources])
-			if choice != -1:
-				playlink = sources[choice]['playlink']
-				isFolder=False
-				xbmc.Player().play(playlink)
+		if playlink == 'false':
+			pass
+		else:
+			sources.append({'quality': quality, 'playlink': playlink})
+	choice = Dialog.select('Select Playlink',[link["quality"] for link in sources])
+	if choice != -1:
+		playlink = sources[choice]['playlink']
+		xbmc.Player().play(playlink)
 
 	
 #################################Red Tube########################################
@@ -512,11 +526,13 @@ def redtube_search(url):
 	
 def redtube_video(url):
 	html = process.OPEN_URL(url)
-	match = re.compile('<img title="(.+?)" id="(.+?)" class=".+?" data-src="(.+?)"').findall(html)
+	match = re.compile('<img title="(.+?)".+?id="(.+?)".+?data-src="(.+?)"',re.DOTALL).findall(html)
 	for name,url,img in match:
 		name = clean_name.clean_name(name)
 		url = 'http://www.redtube.com/'+url
-		img = 'http:'+img
+		if not img.startswith('https:'):
+			img = 'https:'+img
+			xbmc.log(url,xbmc.LOGNOTICE)
 		process.PLAY(name,url,732,img,FANART,'','')
 	next = re.compile('<link rel="next" href="(.+?)">').findall(html)
 	for item in next:
@@ -525,21 +541,22 @@ def redtube_video(url):
 def redtube_playlink(url):
 	sources = []
 	html = process.OPEN_URL(url)
-	block = re.compile('sources: {(.+?)}',re.DOTALL).findall(html)
-	for item in block:
-		match = re.compile('"(.+?)":"(.+?)"').findall(str(item))
-		for quality,playlink in match:
-			playlink = 'http:'+playlink.replace('\\','')
-			sources.append({'quality': quality, 'playlink': playlink})
-			if len(sources) == len(match):
-				choice = Dialog.select('Select Playlink',[link["quality"] for link in sources])
-				if choice != -1:
-					playlink = sources[choice]['playlink']
-					isFolder=False
-					xbmc.Player().play(playlink)
-			
-	
-
+	block = re.compile('"defaultQuality"(.+?)}').findall(html)
+	for b in block:
+		try:
+			qual = re.findall('"quality":"(.+?)"',str(b))[0]
+			playlink = re.findall('"videoUrl":"(.+?)"',str(b))[0]
+			qual = qual.replace('\)','p\)')
+			playlink = playlink.replace('\\','')
+			sources.append({'quality': qual, 'url': playlink})
+		except:
+			pass
+	choice = Dialog.select('Select Playlink',["(" + link["quality"] + ")" for link in sources])
+	if choice != -1:
+		url = sources[choice]['url']
+		isFolder=False
+		xbmc.Player().play(url)
+		
 ################################You Porn########################################
 
 def YouPorn():
@@ -602,18 +619,23 @@ def youporn_new_video(url):
 
 def youporn_playlink(url):
 	sources = []
+	url = url.replace('watch','embed')
 	html = process.OPEN_URL(url)
-	block = re.compile('sources: {(.+?)}',re.DOTALL).findall(html)
-	for item in block:
-		match = re.compile('(.+?): "(.+?)",').findall(str(item))
-		for quality, playlink in match:
-			sources.append({'quality': quality, 'playlink': playlink})
-			if len(sources) == len(match):
-				choice = Dialog.select('Select Playlink',[link["quality"] for link in sources])
-				if choice != -1:
-					playlink = sources[choice]['playlink']
-					isFolder=False
-					xbmc.Player().play(playlink)
+	block = re.compile('"defaultQuality"(.+?)}').findall(html)
+	for b in block:
+		try:
+			qual = re.findall('"quality":"(.+?)"',str(b))[0]
+			playlink = re.findall('"videoUrl":"(.+?)"',str(b))[0]
+			qual = qual.replace('\)','p\)')
+			playlink = playlink.replace('\\','')
+			sources.append({'quality': qual, 'url': playlink})
+		except:
+			pass
+	choice = Dialog.select('Select Playlink',["(" + link["quality"] + ")" for link in sources])
+	if choice != -1:
+		url = sources[choice]['url']
+		isFolder=False
+		xbmc.Player().play(url)
 		
 #################################Chaturbate######################################
 
@@ -647,18 +669,10 @@ def chaturbate_videos(url):
 def chaturbate_playlink(url):
 	sources = []
 	html = process.OPEN_URL(url)
-	fast = re.compile("var hlsSourceFast = '(.+?)'").findall(html)
+	fast = re.compile("Hls.isSupported.+?source src='(.+?)'",re.DOTALL).findall(html)
 	for item in fast:
-		sources.append({'quality': 'Fast Internet Connection', 'playlink': item})
-	slow = re.compile("var hlsSourceSlow = '(.+?)'").findall(html)
-	for thing in slow:
-		sources.append({'quality': 'Slow Internet Connection', 'playlink': thing})
-	choice = Dialog.select('Select Playlink',[link["quality"] for link in sources])
-	if choice != -1:
-		playlink = sources[choice]['playlink']
-		isFolder=False
-		xbmc.Player().play(playlink)
-
+		xbmc.Player().play(item)
+			
 		
 #########################################X HAMSTER#############################################################
 
@@ -679,7 +693,7 @@ def hamster_cats_split(letter,url):
 		block = re.compile('<h2 class="letter-sign">(.+?)</h2>(.+?)<div class="letter-block"',re.DOTALL).findall(html)
 	for check,rest in block:
 		if check == letter:
-			match = re.compile('<a  href="(.+?)">(.+?)</a>').findall(str(rest))
+			match = re.compile('<a href="(.+?)"><span >(.+?)</span>').findall(str(rest))
 			for url,name in match:
 				if '<div' in name:
 					name = re.compile('(.+?)<div').findall(str(name))
@@ -727,7 +741,6 @@ def Porn_Hub():
 	process.Menu('Videos','http://www.pornhub.com/video',709,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	process.Menu('Categories','http://www.pornhub.com/categories',710,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	process.Menu('Pornstars','http://www.pornhub.com/pornstars',712,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
-	
 	process.Menu('Search','',713,'http://cdimage.debian.org/mirror/addons.superrepo.org/v7/addons/plugin.video.pornhub/icon.png',FANART,'','')
 	
 def search_pornhub():
@@ -778,16 +791,23 @@ def get_cat_item(url):
 	
 def get_pornhub_playlinks(url):
 	sources = []
+	xbmc.log('url:'+url,xbmc.LOGNOTICE)
 	html = process.OPEN_URL(url)
-	match = re.compile('var player_quality_(.+?)="(.+?)";').findall(html)
-	for quality,url in match:
-		sources.append({'quality': quality, 'url': url})
-	if len(sources)==len(match):
-		choice = Dialog.select('Select Playlink',["(" + link["quality"] + ")" for link in sources])
-		if choice != -1:
-			url = sources[choice]['url']
-			isFolder=False
-			xbmc.Player().play(url)
+	block = re.compile('"defaultQuality"(.+?)}').findall(html)
+	for b in block:
+		try:
+			qual = re.findall('"quality":"(.+?)"',str(b))[0]
+			playlink = re.findall('"videoUrl":"(.+?)"',str(b))[0]
+			qual = qual.replace('\)','p\)')
+			playlink = playlink.replace('\\','')
+			sources.append({'quality': qual, 'url': playlink})
+		except:
+			pass
+	choice = Dialog.select('Select Playlink',["(" + link["quality"] + ")" for link in sources])
+	if choice != -1:
+		url = sources[choice]['url']
+		isFolder=False
+		xbmc.Player().play(url)
 
 
 	
@@ -832,7 +852,7 @@ def XNew_Videos(url):
     HTML = process.OPEN_URL(url)
     match = re.compile('<div class="thumb-inside">.+?<img src="(.+?)".+?<a href="(.+?)" title="(.+?)">.+?<strong>(.+?)</strong> - (.+?)%').findall(HTML)
     for img,url,name,length,rating in match:
-        process.PLAY((name).replace('&nbsp;','-').replace('---',' - ').replace('&#039;','\'').replace('&amp;','&').replace('&quot;','"').replace('  ','') + ' - Porn Quality : ' + rating + '% - ' + length,'http://www.xvideos.com'+url,706,img,FANART,rating + '% - ' + length,'')	
+        process.PLAY((name).replace('&nbsp;','-').replace('---',' - ').replace('&#039;','\'').replace('&amp;','&').replace('&quot;','"').replace('  ','') + ' - Porn Quality : ' + rating.replace('<span class="mobile-hide">','') + '% - ' + length,'http://www.xvideos.com'+url,706,img,FANART,rating.replace('<span class="mobile-hide">','') + '% - ' + length,'')	
     next_button2 = re.compile('<li><a href="([^"]*)" class="no-page">Next</a></li></ul></div>').findall(HTML)
     for url in next_button2:
         if 'Next' not in List:

@@ -17,6 +17,7 @@ import xbmcaddon
 import xbmcvfs
 import traceback
 import cookielib
+import process
 import xbmc, sys, base64
 from BeautifulSoup import BeautifulStoneSoup, BeautifulSoup, BeautifulSOAP
 try:
@@ -117,7 +118,9 @@ def SKindex_Supremacy():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def SKindex_BAMF():
+    process.Menu('[COLORblue][B]MOVIES[/B][/COLOR]','http://onlinemoviescinema.com/movies/',100070,'','','','','','')
     getData('http://genietvcunts.co.uk/bamffff/BAMF.xml','')
+    #addDir('[COLORblue][B]MOVIES[/B][/COLOR]','http://onlinemoviescinema.com/movies/',100070,'',FANART,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def SKindex_Quicksilver():
