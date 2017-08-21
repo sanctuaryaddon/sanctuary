@@ -93,7 +93,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Quantum',' Brand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \n Fixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \n Added new section for Fido 24/7 which is also in his stand alone add-on \n MORE STUFF COMING SOON :) :)\nTeam Quantum')
+    TextBoxes('Quantum',' [COLORorangered]UPDATED TO V 0.0.4 Fixed all porn sections and Removed broken sections[/COLOR] \nBrand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \nFixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \nAdded new section for Fido 24/7 which is also in his stand alone add-on \nMORE STUFF COMING SOON :) :)\nTeam Quantum')
 
 
 
@@ -486,11 +486,11 @@ def Movie_Men():
 def Movie_Def(url):
 	if url == '4k':
 		from lib.pyramid import pyramid
-		process.Menu('Silent Hunter 4k','http://silenthunter.srve.io/main/4k.xml',1101,SILENT_ICON,FANART,'','','')
-		process.Menu('Pandora 4k','http://genietvcunts.co.uk/PansBox/ORIGINS/4Kmovies.php',426,PANDORA_ICON,'','','')
+		#process.Menu('Silent Hunter 4k','http://silenthunter.srve.io/main/4k.xml',1101,SILENT_ICON,FANART,'','','')
+		#process.Menu('Pandora 4k','http://genietvcunts.co.uk/PansBox/ORIGINS/4Kmovies.php',426,PANDORA_ICON,'','','')
 		process.Menu('Pyramid 4k','http://tombraiderbuilds.co.uk/addon/movies/uhd/uhd.txt',1101,RAIDER_ICON,'','','')
 	elif url == '3D':
-		process.Menu('Pandora 3D','http://genietvcunts.co.uk/PansBox/ORIGINS/hey3D.php',426,PANDORA_ICON,'','','')
+		#process.Menu('Pandora 3D','http://genietvcunts.co.uk/PansBox/ORIGINS/hey3D.php',426,PANDORA_ICON,'','','')
 		process.Menu('Pyramid 3D','http://tombraiderbuilds.co.uk/addon/movies/3d/3d.txt',1101,RAIDER_ICON,'','','')
 	elif url == '1080p':
 		process.Menu('Pandora 1080p','http://genietvcunts.co.uk/PansBox/ORIGINS/hey1080p.php',426,PANDORA_ICON,'','','')
@@ -515,9 +515,9 @@ def Live_Men():
 	process.Menu('TV Guide','',2200,ICON,FANART,'','')
 	from lib.pyramid import pyramid
 	process.Menu('Oblivion IPTV','',1129,OBLIVION_ICON,FANART,'','')
-	process.Menu('BAMF IPTV','http://genietvcunts.co.uk/bamffff/BAMF.xml',1101,BAMF_ICON,FANART,'','')
+	#process.Menu('BAMF IPTV','http://genietvcunts.co.uk/bamffff/BAMF.xml',1101,BAMF_ICON,FANART,'','')
 	pyramid.not_so_anon('Pyramid Live','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][UR][YY][MW][QZ][WI][MW][SS][WI][PD][YO][QZ][BU][MW][QZ][WI][YZ][UR][YY][MW][QZ][WI][MW][SS][WI][PD][YO][QZ][BU][MW][QZ][WI]Have a nice day now',RAIDER_ICON,FANART,'','','')
-	process.Menu('Ultra Live',base64.decodestring('aHR0cDovL3VsdHJhdHYubmV0MTYubmV0L2lwdHZzZXJ2ZXIvcG9ydGFsLnhtbA=='),1101,ULTRA_ICON,'','','')
+	#process.Menu('Ultra Live',base64.decodestring('aHR0cDovL3VsdHJhdHYubmV0MTYubmV0L2lwdHZzZXJ2ZXIvcG9ydGFsLnhtbA=='),1101,ULTRA_ICON,'','','')
 	pyramid.not_so_anon('Fido Live','@WI@@NL@@SE@@OF@@OU@@SE@@HE@@OT@@UQ@@ON@@OG@@FS@@OW@@RS@@PE@@PC@@SE@@AY@@AY@@FS@@OF@@LS@@LE@@SE@@YF@@ON@@KY@@PC@@NL@@LS@@AY@@FS@@OW@@SE@@AY@@AY@@FS@@OF@@PC@L@LS@@EL@@ON@@OU@@EL@@PC@@OP@@LS@@EL@@ON@@OU@@EL@@OW@@OF@@ON@@FO@Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	process.Menu('FreeView - [COLORred]VPN required if you are outside UK[/COLOR]','',1200,FREEVIEW_ICON,FANART,'','')
 	process.Menu('Deliverence Live','http://www.sport-xplosion.com/DELIVERANCE%20TXT%20FILES/home.txt',1101,'http://kodeeresurrection.com/LILYSPORTS/plugin.video.LILYSPORTS/icon.png','','','')
@@ -546,7 +546,7 @@ def Music_Men():
 	pyramid.not_so_anon('Fido Live Music','[QT][LW][PD][QZ][WI][PD][AL][DE][SS][MW][FU][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YO][BU][PD][OI][MW][UP][YZ][LW][YO][LS][XU][WX][PD][LS][LS][XU][QZ][YZ]M[UR][UP][YO][RJ][YZ]M[UR][UP][YO][RJ]Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
 	pyramid.not_so_anon('Pyramid\'s Music','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][BU][UR][UP][YO][RJ][YZ][BU][UR][UP][YO][RJ]Have a nice day now',RAIDER_ICON,FANART,'','','')
-	process.Menu('Pandora\'s Music','http://genietvcunts.co.uk/PansBox/ORIGINS/seasonmusic.php',423,PANDORA_ICON,'','','')
+	#process.Menu('Pandora\'s Music','http://genietvcunts.co.uk/PansBox/ORIGINS/seasonmusic.php',423,PANDORA_ICON,'','','')
 	process.Menu('BAMF\'s Music','http://genietvcunts.co.uk/bamffff/bamfsmusic.xml',1101,BAMF_ICON,'','','')
 
 def classic_list():
@@ -554,8 +554,8 @@ def classic_list():
 			process.Menu('Quantum','',4,ORIGIN_ICON,FANART,'','')
 		if ADDON.getSetting('apprentice')=='true':
                         process.Menu('Apprentice','',100010,app_icon,FANART,'','')
-		if ADDON.getSetting('Pandoras_Box')=='true':
-			process.Menu('Pandora\'s Box','',900,PANDORA_ICON,FANART,'','')
+		#if ADDON.getSetting('Pandoras_Box')=='true':
+			#process.Menu('Pandora\'s Box','',900,PANDORA_ICON,FANART,'','')
 		if ADDON.getSetting('Pyramid')=='true':
 			process.Menu('Pyramid','',1100,RAIDER_ICON,FANART,'','')
 		if ADDON.getSetting('Freeview')=='true':
@@ -564,8 +564,8 @@ def classic_list():
 			process.Menu('Brettus Anime','',1600,BRETTUS_ICON,FANART,'','')
 		if ADDON.getSetting('Oblivion')=='true':
 			process.Menu('Oblivion IPTV','',1129,OBLIVION_ICON,FANART,'','')
-		if ADDON.getSetting("Tigen's_World")=='true':
-			process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
+		#if ADDON.getSetting("Tigen's_World")=='true':
+			#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
 		if ADDON.getSetting('Supremacy')=='true':
 			process.Menu('Supremacy','',1131,SUPREM_ICON,FANART,'','')
 		if ADDON.getSetting('Renegades')=='true':
@@ -574,18 +574,18 @@ def classic_list():
 			process.Menu('Just For Him','',1400,NINJA_ICON,FANART,'','')
 		if ADDON.getSetting('BAMF')=='true':
 			process.Menu('Back In Time','',1132,BAMF_ICON,FANART,'','')
-		if ADDON.getSetting('Quicksilver')=='true':
-			process.Menu('Quicksilver Music','',1133,QUICK_ICON,'','','')
+		#if ADDON.getSetting('Quicksilver')=='true':
+			#process.Menu('Quicksilver Music','',1133,QUICK_ICON,'','','')
 		if ADDON.getSetting('Rays_Ravers')=='true':
 			process.Menu('Rays Ravers','',1147,RAY_ICON,'','','')
-		if ADDON.getSetting('Silent_Hunter')=='true':
-			process.Menu('Silent Hunter','',1134,SILENT_ICON,'','','')
+		#if ADDON.getSetting('Silent_Hunter')=='true':
+			#process.Menu('Silent Hunter','',1134,SILENT_ICON,'','','')
 		if ADDON.getSetting('Dojo')=='true':
 			process.Menu('Dojo Streams','http://herovision.x10host.com/dojo/main.php',2300,DOJO_ICON,'','','')
-		if ADDON.getSetting('Cerberus')=='true':
-			process.Menu('Cerberus','http://roguemedia.x10.mx/cerberus/add-on/mainmenu.php',2301,REAPER_ICON,'','','')
-		if ADDON.getSetting('Ultra')=='true':
-			process.Menu('Ultra IPTV','',1145,ULTRA_ICON,'','','')
+		#if ADDON.getSetting('Cerberus')=='true':
+			#process.Menu('Cerberus','http://roguemedia.x10.mx/cerberus/add-on/mainmenu.php',2301,REAPER_ICON,'','','')
+		#if ADDON.getSetting('Ultra')=='true':
+			#process.Menu('Ultra IPTV','',1145,ULTRA_ICON,'','','')
 		if ADDON.getSetting('Fido')=='true':
 			process.Menu('Fido','',1146,FIDO_ICON,'','','')
 		if ADDON.getSetting('Midnight')=='true':

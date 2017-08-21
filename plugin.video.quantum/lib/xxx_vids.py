@@ -201,13 +201,16 @@ def eporner_pornstar(url):
 	
 def eporner_cats(url):
 	html = process.OPEN_URL(url)
-	block = re.compile('<div id="panel-right-title">(.+?)<li class="lihe">',re.DOTALL).findall(html)
+	block = re.compile('<div class="listcat responsivecategories">(.+?)<table id="categories-list-left">',re.DOTALL).findall(html)
 	for item in block:
-		match = re.compile('<a href="(.+?)" title="(.+?)"><img src="(.+?)"').findall(str(item))
+		match = re.compile('<a href="(.+?)".+?title="(.+?)">.+?<img src="(.+?)"').findall(str(item))
 		for url,name,img in match:
 			url = 'http://eporner.com'+url
 			name = clean_name.clean_name(name)
-			process.Menu(name.replace('Porn Videos',''),url,761,img,FANART,'','')
+			if 'img src' in name:
+				pass
+			else:
+				process.Menu(name.replace('Porn Videos',''),url,761,img,FANART,'','')
 	
 def eporner_video(url):
 	html = process.OPEN_URL(url)
@@ -862,13 +865,13 @@ def XNew_Videos(url):
     
 def XGenres(url):
     HTML = process.OPEN_URL(url)
-    block = re.compile('<div class="main-categories">(.+?)</div>',re.DOTALL).findall(HTML)
-    match = re.compile('<li><a href="(.+?)" class="btn btn-default">(.+?)</a>').findall(str(block))
+    block = re.compile('</div>.+?<div class="main-categories">(.+?)</script>',re.DOTALL).findall(HTML)
+    match = re.compile('"url":"(.+?)","label":"(.+?)"').findall(str(block))
     for url,name in match:
-        if '<span' in name:
-            pass
+    	if 'span' in name :
+        	name = 'porn'
         else:
-    		process.Menu(name,'http://www.xvideos.com'+url,701,'https://pbs.twimg.com/profile_images/378800000578199366/cf160c1c86c13778a834bbade0c30e38.jpeg',FANART,'','')
+        	process.Menu(name,'http://www.xvideos.com'+url.replace('\\',''),701,'https://pbs.twimg.com/profile_images/378800000578199366/cf160c1c86c13778a834bbade0c30e38.jpeg',FANART,'','')
     next_button = re.compile('<li><a class=".+?".+?href="(.+?)">Next</a></li>').findall(HTML)
     for url in next_button:
         if 'Next' not in List:
