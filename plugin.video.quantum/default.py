@@ -93,7 +93,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Quantum',' [COLORorangered]UPDATED TO V 0.0.4 Fixed all porn sections and Removed broken sections[/COLOR] \nBrand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \nFixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \nAdded new section for Fido 24/7 which is also in his stand alone add-on \nMORE STUFF COMING SOON :) :)\nTeam Quantum')
+    TextBoxes('Quantum',' [COLORorangered]UPDATED TO V 0.0.6 Fixed Fido 24/7 section [/COLOR] \nFixed all porn sections and Removed broken sections \nBrand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \nFixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \nAdded new section for Fido 24/7 which is also in his stand alone add-on \nMORE STUFF COMING SOON :) :)\nTeam Quantum')
 
 
 

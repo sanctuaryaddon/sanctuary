@@ -1,4 +1,6 @@
 import urllib2,re,os,xbmc,xbmcplugin,xbmcaddon,xbmcgui,urlparse,urllib,sys,base64, process, random, requests
+from lib.jsunpack import unpack as packets
+from lib.common import random_agent
 from BeautifulSoup import BeautifulSoup
 
 addon_handle = int(sys.argv[1])
@@ -34,10 +36,14 @@ def actvshows():
                 href = url+link['href']
             if link.has_key('title'):
                 name = link['title']
-            html2 = BeautifulSoup(requests.get(href).content)
-            m3u = html2.findAll('source')
-            for source in m3u:
-                src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+            heads = {'User-Agent': random_agent()}
+            html3 = requests.get(href,headers=heads).content
+            pp = packets(html3)
+
+            match = re.compile("'https:(.+?)'").findall(pp)
+            for plink in match:
+                plink = plink.replace('\\','').replace('m3u8/','m3u8')
+                src = 'https:'+plink+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
                 process.Play(name, src ,906,FIDO_ICON,FANART,'','')
 
 
@@ -56,10 +62,14 @@ def actvmovies():
                 href = url+link['href']
             if link.has_key('title'):
                 name = link['title']
-            html2 = BeautifulSoup(requests.get(href).content)
-            m3u = html2.findAll('source')
-            for source in m3u:
-                src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+            heads = {'User-Agent': random_agent()}
+            html3 = requests.get(href,headers=heads).content
+            pp = packets(html3)
+
+            match = re.compile("'https:(.+?)'").findall(pp)
+            for plink in match:
+                plink = plink.replace('\\','').replace('m3u8/','m3u8')
+                src = 'https:'+plink+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
                 process.Play(name, src ,906,FIDO_ICON,FANART,'','')
             
 
@@ -78,18 +88,27 @@ def actvcable():
                 href = url+link['href']
             if link.has_key('title'):
                 name = link['title']
-            html2 = BeautifulSoup(requests.get(href).content)
-            m3u = html2.findAll('source')
-            for source in m3u:
-                src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+            heads = {'User-Agent': random_agent()}
+            html3 = requests.get(href,headers=heads).content
+            pp = packets(html3)
+
+            match = re.compile("'https:(.+?)'").findall(pp)
+            for plink in match:
+                plink = plink.replace('\\','').replace('m3u8/','m3u8')
+                src = 'https:'+plink+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
                 process.Play(name, src ,906,FIDO_ICON,FANART,'','')
 
 def actvrand():
-    html2 = BeautifulSoup(requests.get('http://arconaitv.me/stream.php?id=random').content)
-    m3u = html2.findAll('source')
-    for source in m3u:
-        src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
-        process.Play('Random Pick', src ,906,FIDO_ICON,FANART,'','')
+    html2 = 'http://arconaitv.me/stream.php?id=random'
+    heads = {'User-Agent': random_agent()}
+    html3 = requests.get(html2,headers=heads).content
+    pp = packets(html3)
+
+    match = re.compile("'https:(.+?)'").findall(pp)
+    for plink in match:
+        plink = plink.replace('\\','').replace('m3u8/','m3u8')
+        src = 'https:'+plink+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+        Play('Random Pick', src ,906,'','','','')
 
 def arcontv():
     url = 'http://arconaitv.me/'
@@ -107,10 +126,14 @@ def arcontv():
             pics = link.findAll('img')
             for pic in pics:
                 img = url+pic['src']
-                html2 = BeautifulSoup(requests.get(href).content)
-                m3u = html2.findAll('source')
-                for source in m3u:
-                    src = source['src']+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
+                heads = {'User-Agent': random_agent()}
+                html3 = requests.get(href,headers=heads).content
+                pp = packets(html3)
+
+                match = re.compile("'https:(.+?)'").findall(pp)
+                for plink in match:
+                    plink = plink.replace('\\','').replace('m3u8/','m3u8')
+                    src = 'https:'+plink+'|Referer=http://arconaitv.me&User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F59.0.3071.115%20Safari%2F537.36'
                     process.Play(name, src ,906,img,img,'','')
 
 def Big_Kids_Main_Menu():
