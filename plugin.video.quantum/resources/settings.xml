@@ -15,7 +15,7 @@
 		<setting id="Pyramid" type="bool" label="Pyramid" default="true"/>
 		<setting id="Freeview" type="bool" label="Freeview" default="true"/>
 		<setting id="Brettus_Anime" type="bool" label="Brettus Anime" default="true"/>
-		<setting id="Oblivion" type="bool" label="Oblivion" default="true"/>
+		<setting id="Oblivion" type="bool" label="Oblivion" default="false"/>
 		<setting id="Tigen's_World" type="bool" label="Tigen's World" default="false"/>
 		<setting id="Supremacy" type="bool" label="Supremacy" default="true"/>
 		<setting id="Freedom" type="bool" label="Freedom" default="true"/>
@@ -44,7 +44,7 @@
 		<setting id="Pyramid_Search" type="bool" label="Pyramid Search" default="true"/>
 		<setting id="Freeview_Search" type="bool" label="Freeview Search" default="true"/>
 		<setting id="Brettus_Anime_Search" type="bool" label="Brettus Anime Search" default="true"/>
-		<setting id="Oblivion_Search" type="bool" label="Oblivion Search" default="true"/>
+		<setting id="Oblivion_Search" type="bool" label="Oblivion Search" default="false"/>
 		<setting id="Tigen's_World_Search" type="bool" label="Tigen's World Search" default="false"/>
 		<setting id="Cold_As_Ice_Search" type="bool" label="Cold as Ice Search" default="true"/>
 		<setting id="Supremacy_Search" type="bool" label="Supremacy Search" default="true"/>

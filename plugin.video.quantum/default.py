@@ -93,7 +93,7 @@ def TextBoxes(heading,announce):
 
 if not os.path.exists(full_file):
     Open = open(full_file,'w+')
-    TextBoxes('Quantum',' [COLORorangered]UPDATED TO V 0.0.6 Fixed Fido 24/7 section [/COLOR] \nFixed all porn sections and Removed broken sections \nBrand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \nFixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \nAdded new section for Fido 24/7 which is also in his stand alone add-on \nMORE STUFF COMING SOON :) :)\nTeam Quantum')
+    TextBoxes('Quantum',' [COLORorangered]UPDATED TO V 0.0.7 Fixed Quantum Cartoons section and Quantum 24/7 [/COLOR] \nFixed Fido 24/7 section \nFixed all porn sections and Removed broken sections \nBrand new addon added in addons section, Big thanks to noobsandnerds for letting me intergrate NaNscrapers \nFixed some of the porn sections Thanks to an old friend ;) although some bits still not showing\nBut keep getting distracted fixing them god knows why :) \nAdded new section for Fido 24/7 which is also in his stand alone add-on \nMORE STUFF COMING SOON :) :)\nTeam Quantum')
 
 
 
@@ -514,7 +514,7 @@ def Live_Men():
 	process.Menu('Search','Live TV',1501,'','','','')
 	process.Menu('TV Guide','',2200,ICON,FANART,'','')
 	from lib.pyramid import pyramid
-	process.Menu('Oblivion IPTV','',1129,OBLIVION_ICON,FANART,'','')
+	#process.Menu('Oblivion IPTV','',1129,OBLIVION_ICON,FANART,'','')
 	#process.Menu('BAMF IPTV','http://genietvcunts.co.uk/bamffff/BAMF.xml',1101,BAMF_ICON,FANART,'','')
 	pyramid.not_so_anon('Pyramid Live','[QT][WI][XU][BU][ID][SS][PD][YO][LS][MW][SS][ID][UR][YO][JJ][LS][UP][WX][RJ][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YZ][UR][YY][MW][QZ][WI][MW][SS][WI][PD][YO][QZ][BU][MW][QZ][WI][YZ][UR][YY][MW][QZ][WI][MW][SS][WI][PD][YO][QZ][BU][MW][QZ][WI]Have a nice day now',RAIDER_ICON,FANART,'','','')
 	#process.Menu('Ultra Live',base64.decodestring('aHR0cDovL3VsdHJhdHYubmV0MTYubmV0L2lwdHZzZXJ2ZXIvcG9ydGFsLnhtbA=='),1101,ULTRA_ICON,'','','')
@@ -541,7 +541,7 @@ def Kids_Men():
 def Music_Men():
 	process.Menu('Search','',1503,'','','','')
 	from lib.pyramid import pyramid
-	process.Menu('Quicksilver Music','',1133,QUICK_ICON,'','','')
+	#process.Menu('Quicksilver Music','',1133,QUICK_ICON,'','','')
 	#process.Menu('Rays Ravers','',1147,RAY_ICON,'','','')
 	pyramid.not_so_anon('Fido Live Music','[QT][LW][PD][QZ][WI][PD][AL][DE][SS][MW][FU][XU][WX][UR][YY][YZ][PD][LS][LS][XU][QZ][YO][BU][PD][OI][MW][UP][YZ][LW][YO][LS][XU][WX][PD][LS][LS][XU][QZ][YZ]M[UR][UP][YO][RJ][YZ]M[UR][UP][YO][RJ]Hope you enjoy the view',FIDO_ICON,FANART,'','','')
 	#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
@@ -562,8 +562,8 @@ def classic_list():
 			process.Menu('FreeView - [COLORred]VPN required if you are outside UK[/COLOR]','',1200,FREEVIEW_ICON,FANART,'','')
 		if ADDON.getSetting('Brettus_Anime')=='true':
 			process.Menu('Brettus Anime','',1600,BRETTUS_ICON,FANART,'','')
-		if ADDON.getSetting('Oblivion')=='true':
-			process.Menu('Oblivion IPTV','',1129,OBLIVION_ICON,FANART,'','')
+		#if ADDON.getSetting('Oblivion')=='true':
+		#	process.Menu('Oblivion IPTV','',1129,OBLIVION_ICON,FANART,'','')
 		#if ADDON.getSetting("Tigen's_World")=='true':
 			#process.Menu('Tigen\'s World','',1143,TIGEN_ICON,FANART,'','')
 		if ADDON.getSetting('Supremacy')=='true':

@@ -262,9 +262,9 @@ def Random_Play_Cartoon(url,name):
                         html3 = process.OPEN_URL(next_url_to_use[0])
                         match4 = re.compile('"playlist">(.+?)</span></div><div><iframe src="(.+?)"').findall(html3)
                         for ignore,final_playlink_get in match4:
-                            if 'panda' in final_playlink_get:
+                            if 'easy' in final_playlink_get:
                                 html4 = process.OPEN_URL(final_playlink_get)
-                                match5 = re.compile("url: '(.+?)'").findall(html4)
+                                match5 = re.compile('file: "(.+?)"').findall(html4)
                                 for finally_got_there_phew in match5:
                                     if 'http' in finally_got_there_phew:
                                         liz = xbmcgui.ListItem(next_url_to_use[1], iconImage=IMAGE, thumbnailImage=IMAGE)
@@ -384,13 +384,13 @@ def LISTS2(url,IMAGE):
 					sources.append({'source': 'playpanda', 'quality': 'SD', 'url': url3})
         elif 'easy' in url2:
             HTML2 = process.OPEN_URL(url2)
-            match3 = re.compile("url: '(.+?)'").findall(HTML2)
+            match3 = re.compile('file: "(.+?)"').findall(HTML2)
             for url3 in match3:
                 if 'http' in url3:
 					sources.append({'source': 'easyvideo', 'quality': 'SD', 'url': url3})
         elif 'zoo' in url2:
             HTML3 = process.OPEN_URL(url2)
-            match4 = re.compile("url: '(.+?)'").findall(HTML3)
+            match4 = re.compile('src: "(.+?)"').findall(HTML3)
             for url3 in match4:
                 if 'http' in url3:
 					sources.append({'source': 'videozoo', 'quality': 'SD', 'url': url3})
